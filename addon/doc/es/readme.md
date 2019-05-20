@@ -1,3 +1,5 @@
+# Modificador del canal de actualización de NVDA
+
 ## Introducción
 
 Este complemento te permite descargar e instalar la versión más reciente de NVDA del tipo elegido sin visitar ninguna página web ni usar tu navegador web. Es útil cuando, por ejemplo, quieres probar nuevas características que hay en una versión de desarrollo y después regresar a la versión estable más reciente. Si pruebas con regularidad versiones de desarrollo de NVDA y normalmente las instalas en tu ordenador, ahorrarás un montón de tiempo con este complemento.
