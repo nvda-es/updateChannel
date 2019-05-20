@@ -7,64 +7,64 @@ msgid ""
 msgstr ""
 "Project-Id-Version: updateChannels 1.0\n"
 "Report-Msgid-Bugs-To: nvda-translations@freelists.org\n"
-"POT-Creation-Date: 2019-05-20 19:55+0200\n"
-"PO-Revision-Date: 2019-05-20 20:02+0200\n"
+"POT-Creation-Date: 2019-05-20 20:10+0200\n"
+"PO-Revision-Date: 2019-05-20 20:11+0200\n"
+"Last-Translator: José Manuel Delicado <jmdaweb@hotmail.com>\n"
 "Language-Team: \n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 2.2.2\n"
-"Last-Translator: José Manuel Delicado <jmdaweb@hotmail.com>\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"Language: es\n"
 
 #. TRANSLATORS: default channel option in the combo box
-#: addon\globalPlugins\updateChannels.py:26
+#: addon\globalPlugins\updateChannel.py:26
 msgid "Default"
 msgstr "Predeterminado"
 
 #. TRANSLATORS: stable releases option in the combo box
-#: addon\globalPlugins\updateChannels.py:28
+#: addon\globalPlugins\updateChannel.py:28
 msgid "Stable"
 msgstr "Estable"
 
 #. TRANSLATORS: stable, release candidate and beta releases option in the combo box
-#: addon\globalPlugins\updateChannels.py:30
+#: addon\globalPlugins\updateChannel.py:30
 msgid "Stable, rc and beta"
 msgstr "Estable, rc y beta"
 
 #. TRANSLATORS: alpha snapshots option in the combo box
-#: addon\globalPlugins\updateChannels.py:32
+#: addon\globalPlugins\updateChannel.py:32
 msgid "Alpha (snapshots)"
 msgstr "Alfa (versiones de desarrollo)"
 
 #. TRANSLATORS: beta snapshots option in the combo box
-#: addon\globalPlugins\updateChannels.py:34
+#: addon\globalPlugins\updateChannel.py:34
 msgid "Beta (snapshots)"
 msgstr "Beta (versiones de desarrollo)"
 
 #. TRANSLATORS: threshold snapshots option in the combo box
-#: addon\globalPlugins\updateChannels.py:36
+#: addon\globalPlugins\updateChannel.py:36
 msgid "Threshold (snapshots)"
 msgstr "Threshold (versiones de desarrollo)"
 
 #. TRANSLATORS: disable updates option in the combo box
-#: addon\globalPlugins\updateChannels.py:38
+#: addon\globalPlugins\updateChannel.py:38
 msgid "Disable updates (not recommended)"
 msgstr "Deshabilitar actualizaciones (no recomendado)"
 
 #. TRANSLATORS: title for the Update Channel settings category
 #. TRANSLATORS: label for available update channels in a combo box
-#: addon\globalPlugins\updateChannels.py:43
-#: addon\globalPlugins\updateChannels.py:48
+#: addon\globalPlugins\updateChannel.py:43
+#: addon\globalPlugins\updateChannel.py:48
 msgid "Update channel"
 msgstr "Canal de actualización"
 
 #. Add-on summary, usually the user visible name of the addon.
 #. Translators: Summary for this add-on to be shown on installation and add-on information.
 #: buildVars.py:17
-msgid "Update channels"
-msgstr "Canales de actualización"
+msgid "Switch update channel"
+msgstr "Cambiar canal de actualización"
 
 #. Add-on description
 #. Translators: Long description to be shown for this add-on on add-on information from add-ons manager
@@ -80,3 +80,6 @@ msgstr ""
 "en el diálogo de opciones de NVDA, elige tu canal de actualización y busca "
 "actualizaciones desde el menú Ayuda de NVDA. Elige la opción estable y "
 "actualiza de nuevo para volver a una liberación oficial."
+
+#~ msgid "Update channels"
+#~ msgstr "Canales de actualización"
