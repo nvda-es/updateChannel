@@ -17,7 +17,6 @@ originalChannel=versionInfo.updateVersionType
 confspec={
 	"channel":"integer(default=0)"
 }
-
 config.conf.spec['updateChannel']=confspec
 
 channels=['default', 'stable', 'beta', 'snapshot:alpha', 'snapshot:beta', 'snapshot:threshold', None]
@@ -46,10 +45,10 @@ class UpdateChannelPanel(SettingsPanel):
 		helper=guiHelper.BoxSizerHelper(self, sizer=sizer)
 		#TRANSLATORS: label for available update channels in a combo box
 		self.channels=helper.addLabeledControl(_("Update channel"), wx.Choice, choices=channelDescriptions)
-		self.channels.Selection=config.conf['updateChannel']['channel']
+		self.channels.Selection=int(config.conf.profiles[0]['updateChannel']['channel'])
 
 	def onSave(self):
-		config.conf['updateChannel']['channel']=self.channels.Selection
+		config.conf.profiles[0]['updateChannel']['channel']=self.channels.Selection
 		if self.channels.Selection==0:
 			versionInfo.updateVersionType=originalChannel
 		else:
@@ -58,7 +57,7 @@ class UpdateChannelPanel(SettingsPanel):
 class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	def __init__(self):
 		super(GlobalPlugin, self).__init__()
-		index=config.conf['updateChannel']['channel']
+		index=int(config.conf.profiles[0]['updateChannel']['channel'])
 		if index>len(channels):
 			index=0
 		if index>0:
