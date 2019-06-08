@@ -52,7 +52,7 @@ class UpdateChannelPanel(SettingsPanel):
 		if self.channels.Selection==0:
 			versionInfo.updateVersionType=originalChannel
 		else:
-			versionInfo.updateVersionType=channels[config.conf['updateChannel']['channel']]
+			versionInfo.updateVersionType=channels[config.conf.profiles[0]['updateChannel']['channel']]
 
 class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	def __init__(self):
