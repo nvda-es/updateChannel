@@ -11,6 +11,10 @@ import config
 from gui import settingsDialogs, guiHelper, NVDASettingsDialog
 from gui.settingsDialogs import SettingsPanel
 import wx
+try:
+	import updateCheck
+except:
+	updateCheck=None
 
 originalChannel=versionInfo.updateVersionType
 
@@ -57,9 +61,19 @@ class UpdateChannelPanel(SettingsPanel):
 			versionInfo.updateVersionType=originalChannel
 		else:
 			versionInfo.updateVersionType=channels[config.conf.profiles[0]['updateChannel']['channel']]
+		# This prevents an issue caused when updates were downloaded without installing and the channel was changed. Reset the state dictionary and save it
+		updateCheck.state['lastCheck']=0
+		updateCheck.state['pendingUpdateAPIVersion']=(0,0,0)
+		updateCheck.state['pendingUpdateBackCompatToAPIVersion']=(0,0,0)
+		updateCheck.state['dontRemindVersion']=None
+		updateCheck.state['pendingUpdateFile']=None
+		updateCheck.state['pendingUpdateVersion']=None
+		updateCheck.saveState()
 
 class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	def __init__(self):
+		if not updateCheck:
+			return
 		super(GlobalPlugin, self).__init__()
 		index=int(config.conf.profiles[0]['updateChannel']['channel'])
 		if index>len(channels):
@@ -69,6 +83,8 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		NVDASettingsDialog.categoryClasses.append(UpdateChannelPanel)
 
 	def terminate(self):
-		NVDASettingsDialog.categoryClasses.remove(UpdateChannelPanel)
-		versionInfo.updateVersionType=originalChannel
-
+		try:
+			NVDASettingsDialog.categoryClasses.remove(UpdateChannelPanel)
+			versionInfo.updateVersionType=originalChannel
+		except:
+			pass
