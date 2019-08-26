@@ -19,7 +19,7 @@ confspec={
 }
 config.conf.spec['updateChannel']=confspec
 
-channels=['default', 'stable', 'beta', 'snapshot:alpha', 'snapshot:beta', 'snapshot:threshold', None]
+channels=['default', 'stable', 'beta', 'snapshot:alpha', 'snapshot:beta', 'snapshot:rc', 'snapshot:threshold', 'snapshot:threshold_py3_staging', None]
 channelDescriptions=[
 	#TRANSLATORS: default channel option in the combo box
 	_("Default"),
@@ -31,8 +31,12 @@ channelDescriptions=[
 	_("Alpha (snapshots)"),
 	#TRANSLATORS: beta snapshots option in the combo box
 	_("Beta (snapshots)"),
+	#TRANSLATORS: rc snapshots option in the combo box
+	_("RC (snapshots)"),
 	#TRANSLATORS: threshold snapshots option in the combo box
 	_("Threshold (snapshots)"),
+	#TRANSLATORS: threshold (Python 3 transition work) snapshots option in the combo box
+	_("Threshold, Python 3 transition work (snapshots)"),
 	#TRANSLATORS: disable updates option in the combo box
 	_("Disable updates (not recommended)")
 ]
