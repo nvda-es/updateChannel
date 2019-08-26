@@ -15,9 +15,9 @@ try:
 	import updateCheck
 except:
 	updateCheck=None
+import globalVars
 
 originalChannel=versionInfo.updateVersionType
-
 confspec={
 	"channel":"integer(default=0)"
 }
@@ -72,7 +72,7 @@ class UpdateChannelPanel(SettingsPanel):
 
 class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	def __init__(self):
-		if not updateCheck:
+		if globalVars.appArgs.secure or config.isAppX or not updateCheck: # Security checks
 			return
 		super(GlobalPlugin, self).__init__()
 		index=int(config.conf.profiles[0]['updateChannel']['channel'])
