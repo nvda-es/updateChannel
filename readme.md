@@ -15,7 +15,7 @@ You can change the NVDA update channel by going to NVDA menu, Preferences, Setti
 * Beta (snapshots): choose this option to update to the latest beta snapshot built from the beta branch. Beta code has been more tested than Alpha. However, until the official beta version is released, it may not be stable enough for most users.
 * RC (snapshots): choose this option to update to the latest release candidate snapshot built from the rc branch. RC code has been more tested than Beta. However, until the official rc version is released, it may not be stable enough for most users.
 * Threshold (snapshots): choose this option if you want to test Python 3 transition work, speech refactor and many new features.
-* Threshold (Python 3 transition work) (snapshots): choose this option if you contribute with the transition from Python 2 to Python 3 and want to test the changes.
+* Threshold, Python 3 transition work (snapshots): choose this option if you contribute with the transition from Python 2 to Python 3 and want to test the changes.
 * Disable updates (not recommended): this option disables the update channel. If you check for updates an error message will be displayed. Remember that you can disable automatic updates from the General settings category.
 
 Note: some channels have been created with transition / specific testing purposes and may be nolonger receive updates.

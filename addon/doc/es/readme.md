@@ -15,7 +15,7 @@ Puedes cambiar el canal de actualización yendo al menú NVDA, Preferencias, Opc
 * Beta (versiones de desarrollo): elige esta opción para actualizar a la beta más reciente construida desde la rama beta. El código beta ha sido más probado que el alfa. Sin embargo, hasta que la versión oficial beta no sea liberada, puede no ser suficientemente estable para la mayoría de los usuarios.
 * RC (versiones de desarrollo): elige esta opción para actualizar a la candidata a liberación más reciente construida desde la rama rc. El código rc ha sido más probado que el beta. Sin embargo, hasta que la versión oficial candidata a liberación no se publique, puede no ser suficientemente estable para la mayoría de los usuarios.
 * Threshold (versiones de desarrollo): elige esta opción si quieres probar los trabajos de transición a Python 3, la refactorización del habla y muchas nuevas características.
-* Threshold (trabajos de transición a Python 3) (versiones de desarrollo): elige esta opción si contribuyes con la transición de Python 2 a Python 3 y quieres probar los cambios.
+* Threshold, trabajos de transición a Python 3 (versiones de desarrollo): elige esta opción si contribuyes con la transición de Python 2 a Python 3 y quieres probar los cambios.
 * Deshabilitar actualizaciones (no recomendado): esta opción desactiva el canal de actualizaciones. Si buscas actualizaciones se mostrará un mensaje de error. Recuerda que puedes desactivar las actualizaciones automáticas desde la categoría de opciones generales.
 
 Nota: algunos canales se han creado con propósitos de transición o pruebas específicas y podrían no recibir actualizaciones nunca más.
