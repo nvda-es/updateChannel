@@ -72,9 +72,9 @@ class UpdateChannelPanel(SettingsPanel):
 
 class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	def __init__(self):
+		super(GlobalPlugin, self).__init__()
 		if globalVars.appArgs.secure or config.isAppX or not updateCheck: # Security checks
 			return
-		super(GlobalPlugin, self).__init__()
 		index=int(config.conf.profiles[0]['updateChannel']['channel'])
 		if index>len(channels):
 			index=0
