@@ -18,7 +18,7 @@ You can change the NVDA update channel by going to NVDA menu, Preferences, Setti
 * Threshold, Python 3 transition work (snapshots): choose this option if you contribute with the transition from Python 2 to Python 3 and want to test the changes.
 * Disable updates (not recommended): this option disables the update channel. If you check for updates an error message will be displayed. Remember that you can disable automatic updates from the General settings category.
 
-Note: some channels have been created with transition / specific testing purposes and may be nolonger receive updates.
+Note: some channels have been created with transition / specific testing purposes and may no longer receive updates.
 
 ## Changelog
 
