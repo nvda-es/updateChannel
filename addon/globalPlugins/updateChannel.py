@@ -17,7 +17,7 @@ except:
 	updateCheck=None
 import globalVars
 
-originalChannel=versionInfo.updateVersionType
+originalChannel=None
 confspec={
 	"channel":"integer(default=0)"
 }
@@ -75,6 +75,8 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		super(GlobalPlugin, self).__init__()
 		if globalVars.appArgs.secure or config.isAppX or not updateCheck: # Security checks
 			return
+		global originalChannel
+		originalChannel=versionInfo.updateVersionType
 		index=int(config.conf.profiles[0]['updateChannel']['channel'])
 		if index>len(channels):
 			index=0
@@ -83,8 +85,10 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		NVDASettingsDialog.categoryClasses.append(UpdateChannelPanel)
 
 	def terminate(self):
+		global originalChannel
 		try:
 			NVDASettingsDialog.categoryClasses.remove(UpdateChannelPanel)
 			versionInfo.updateVersionType=originalChannel
+			originalChannel=None
 		except:
 			pass
