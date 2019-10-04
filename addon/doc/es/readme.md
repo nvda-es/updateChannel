@@ -2,7 +2,7 @@
 
 ## Introducción
 
-Este complemento te permite descargar e instalar la versión más reciente de NVDA del tipo elegido sin visitar ninguna página web ni usar tu navegador web. Es útil cuando, por ejemplo, quieres probar nuevas características que hay en una versión de desarrollo y después regresar a la versión estable más reciente. Si pruebas con regularidad versiones de desarrollo de NVDA y normalmente las instalas en tu ordenador, ahorrarás un montón de tiempo con este complemento. Si prefieres probar las versiones de desarrollo en modo portable y mantener tu copia instalada de NVDA sin cambios, visita la [página de descarga de versiones de desarrollo de NVDA](https://www.nvaccess.org/files/nvda/snapshots/).
+Este complemento te permite descargar e instalar la versión más reciente de NVDA del tipo elegido sin visitar ninguna página web ni usar tu navegador web. Es útil cuando, por ejemplo, quieres probar nuevas características que hay en una versión de desarrollo y después regresar a la versión estable más reciente. Si pruebas con regularidad versiones de desarrollo de NVDA y normalmente las instalas en tu ordenador, ahorrarás un montón de tiempo con este complemento. Si prefieres probar las versiones de desarrollo en modo portable y mantener tu copia instalada de NVDA sin cambios, este complemento también es para ti.
 
 ## Modo de uso
 
