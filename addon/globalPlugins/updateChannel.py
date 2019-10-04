@@ -53,10 +53,20 @@ class UpdateChannelPanel(SettingsPanel):
 		helper=guiHelper.BoxSizerHelper(self, sizer=sizer)
 		#TRANSLATORS: label for available update channels in a combo box
 		self.channels=helper.addLabeledControl(_("Update channel"), wx.Choice, choices=channelDescriptions)
-		self.channels.Selection=int(config.conf.profiles[0]['updateChannel']['channel'])
+		try:
+			# Use normal profile only if possible
+			self.channels.Selection=int(config.conf.profiles[0]['updateChannel']['channel'])
+		except:
+			# when using for the first time, read from general configuration
+			self.channels.Selection=config.conf['updateChannel']['channel']
 
 	def onSave(self):
-		config.conf.profiles[0]['updateChannel']['channel']=self.channels.Selection
+		try:
+			# Use normal profile only if possible
+			config.conf.profiles[0]['updateChannel']['channel']=self.channels.Selection
+		except:
+			# when configuring for the first time, use general configuration to create required keys in the normal profile
+			config.conf['updateChannel']['channel']=self.channels.Selection
 		if self.channels.Selection==0:
 			versionInfo.updateVersionType=originalChannel
 		else:
@@ -77,7 +87,12 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			return
 		global originalChannel
 		originalChannel=versionInfo.updateVersionType
-		index=int(config.conf.profiles[0]['updateChannel']['channel'])
+		try:
+			# Use normal profile only if possible
+			index=int(config.conf.profiles[0]['updateChannel']['channel'])
+		except:
+			# when using for the first time, read from general configuration
+			index=config.conf['updateChannel']['channel']
 		if index>len(channels):
 			index=0
 		if index>0:
