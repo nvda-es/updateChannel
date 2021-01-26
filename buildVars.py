@@ -4,7 +4,8 @@
 # Change this file instead of sconstruct or manifest files, whenever possible.
 
 # Full getext (please don't change)
-_ = lambda x : x
+def _(arg):
+	return arg
 
 # Add-on information variables
 addon_info = {
@@ -19,7 +20,7 @@ addon_info = {
 	# Translators: Long description to be shown for this add-on on add-on information from add-ons manager
 	"addon_description" : _("""This add-on allows you to switch quickly between NVDA snapshots and release types. Go to the update channel category on the NVDA settings dialog, choose your update channel and check for updates from the NVDA help menu. Choose the stable option and update again to return to an official release."""),
 	# version
-	"addon_version" : "1.0",
+	"addon_version" : "1.0.1",
 	# Author(s)
 	"addon_author" : "Jose Manuel Delicado <jm.delicado@nvda.es>",
 	# URL for the add-on documentation support
@@ -29,7 +30,7 @@ addon_info = {
 	# Minimum NVDA version supported (e.g. "2018.3.0")
 	"addon_minimumNVDAVersion" : "2019.1.0",
 	# Last NVDA version supported/tested (e.g. "2018.4.0", ideally more recent than minimum version)
-	"addon_lastTestedNVDAVersion" : "2019.3.0",
+	"addon_lastTestedNVDAVersion" : "2021.1.0",
 	# Add-on update channel (default is stable or None)
 	"addon_updateChannel" : None,
 }
@@ -47,3 +48,8 @@ i18nSources = pythonSources + ["buildVars.py"]
 # Files that will be ignored when building the nvda-addon file
 # Paths are relative to the addon directory, not to the root directory of your addon sources.
 excludedFiles=[i[6:] for i in glob("addon/doc/*/*.md")+glob("addon/locale/*/LC_MESSAGES/*.po")]+[os.path.join("doc", "en", "readme.md")]
+
+# Base language for the NVDA add-on
+# If your add-on is written in a language other than english, modify this variable.
+# For example, set baseLanguage to "es" if your add-on is primarily written in spanish.
+baseLanguage = "en"
