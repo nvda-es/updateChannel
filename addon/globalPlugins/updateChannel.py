@@ -1,105 +1,107 @@
-#Update channel addon for NVDA
-#This file is covered by the GNU General Public License.
-#See the file COPYING.txt for more details.
-#Copyright (C) 2019 Jose Manuel Delicado <jm.delicado@nvda.es>
+# Update channel addon for NVDA
+# This file is covered by the GNU General Public License.
+# See the file COPYING.txt for more details.
+# Copyright (C) 2021 Jose Manuel Delicado <jm.delicado@nvda.es>
+
 import globalPluginHandler
-import gui
 import addonHandler
-addonHandler.initTranslation()
 import versionInfo
 import config
-from gui import settingsDialogs, guiHelper, NVDASettingsDialog
+from gui import guiHelper, NVDASettingsDialog
 from gui.settingsDialogs import SettingsPanel
 import wx
 try:
 	import updateCheck
 except:
-	updateCheck=None
+	updateCheck = None
 import globalVars
 
-originalChannel=None
-confspec={
-	"channel":"integer(default=0)"
+addonHandler.initTranslation()
+originalChannel = None
+confspec = {
+	"channel": "integer(default=0)"
 }
-config.conf.spec['updateChannel']=confspec
+config.conf.spec['updateChannel'] = confspec
 
-channels=['default', 'stable', 'beta', 'snapshot:alpha', 'snapshot:beta', 'snapshot:rc', None]
-channelDescriptions=[
-	#TRANSLATORS: default channel option in the combo box
+channels = ['default', 'stable', 'beta', 'snapshot:alpha', 'snapshot:beta', 'snapshot:rc', None]
+channelDescriptions = [
+	# TRANSLATORS: default channel option in the combo box
 	_("Default"),
-	#TRANSLATORS: stable releases option in the combo box
+	# TRANSLATORS: stable releases option in the combo box
 	_("Stable"),
-	#TRANSLATORS: stable, release candidate and beta releases option in the combo box
+	# TRANSLATORS: stable, release candidate and beta releases option in the combo box
 	_("Stable, rc and beta"),
-	#TRANSLATORS: alpha snapshots option in the combo box
+	# TRANSLATORS: alpha snapshots option in the combo box
 	_("Alpha (snapshots)"),
-	#TRANSLATORS: beta snapshots option in the combo box
+	# TRANSLATORS: beta snapshots option in the combo box
 	_("Beta (snapshots)"),
-	#TRANSLATORS: rc snapshots option in the combo box
+	# TRANSLATORS: rc snapshots option in the combo box
 	_("RC (snapshots)"),
-	#TRANSLATORS: disable updates option in the combo box
+	# TRANSLATORS: disable updates option in the combo box
 	_("Disable updates (not recommended)")
 ]
 
+
 class UpdateChannelPanel(SettingsPanel):
-	#TRANSLATORS: title for the Update Channel settings category
-	title=_("Update channel")
+	# TRANSLATORS: title for the Update Channel settings category
+	title = _("Update channel")
 
 	def makeSettings(self, sizer):
-		helper=guiHelper.BoxSizerHelper(self, sizer=sizer)
-		#TRANSLATORS: label for available update channels in a combo box
-		self.channels=helper.addLabeledControl(_("Update channel"), wx.Choice, choices=channelDescriptions)
+		helper = guiHelper.BoxSizerHelper(self, sizer=sizer)
+		# TRANSLATORS: label for available update channels in a combo box
+		self.channels = helper.addLabeledControl(_("Update channel"), wx.Choice, choices=channelDescriptions)
 		try:
 			# Use normal profile only if possible
-			self.channels.Selection=int(config.conf.profiles[0]['updateChannel']['channel'])
+			self.channels.Selection = int(config.conf.profiles[0]['updateChannel']['channel'])
 		except:
-			# when using for the first time, read from general configuration
-			self.channels.Selection=config.conf['updateChannel']['channel']
+			# When using for the first time, read from general configuration
+			self.channels.Selection = config.conf['updateChannel']['channel']
 
 	def onSave(self):
 		try:
 			# Use normal profile only if possible
-			config.conf.profiles[0]['updateChannel']['channel']=self.channels.Selection
+			config.conf.profiles[0]['updateChannel']['channel'] = self.channels.Selection
 		except:
-			# when configuring for the first time, use general configuration to create required keys in the normal profile
-			config.conf['updateChannel']['channel']=self.channels.Selection
-		if self.channels.Selection==0:
-			versionInfo.updateVersionType=originalChannel
+			# When configuring for the first time, use general configuration to create required keys in the normal profile
+			config.conf['updateChannel']['channel'] = self.channels.Selection
+		if self.channels.Selection == 0:
+			versionInfo.updateVersionType = originalChannel
 		else:
-			versionInfo.updateVersionType=channels[config.conf.profiles[0]['updateChannel']['channel']]
+			versionInfo.updateVersionType = channels[config.conf.profiles[0]['updateChannel']['channel']]
 		# This prevents an issue caused when updates were downloaded without installing and the channel was changed. Reset the state dictionary and save it
-		updateCheck.state['lastCheck']=0
-		updateCheck.state['pendingUpdateAPIVersion']=(0,0,0)
-		updateCheck.state['pendingUpdateBackCompatToAPIVersion']=(0,0,0)
-		updateCheck.state['dontRemindVersion']=None
-		updateCheck.state['pendingUpdateFile']=None
-		updateCheck.state['pendingUpdateVersion']=None
+		updateCheck.state['lastCheck'] = 0
+		updateCheck.state['pendingUpdateAPIVersion'] = (0, 0, 0)
+		updateCheck.state['pendingUpdateBackCompatToAPIVersion'] = (0, 0, 0)
+		updateCheck.state['dontRemindVersion'] = None
+		updateCheck.state['pendingUpdateFile'] = None
+		updateCheck.state['pendingUpdateVersion'] = None
 		updateCheck.saveState()
+
 
 class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	def __init__(self):
 		super(GlobalPlugin, self).__init__()
-		if globalVars.appArgs.secure or config.isAppX or not updateCheck: # Security checks
+		if globalVars.appArgs.secure or config.isAppX or not updateCheck:  # Security checks
 			return
 		global originalChannel
-		originalChannel=versionInfo.updateVersionType
+		originalChannel = versionInfo.updateVersionType
 		try:
 			# Use normal profile only if possible
-			index=int(config.conf.profiles[0]['updateChannel']['channel'])
+			index = int(config.conf.profiles[0]['updateChannel']['channel'])
 		except:
-			# when using for the first time, read from general configuration
-			index=config.conf['updateChannel']['channel']
-		if index>len(channels):
-			index=0
-		if index>0:
-			versionInfo.updateVersionType=channels[index]
+			# When using for the first time, read from general configuration
+			index = config.conf['updateChannel']['channel']
+		if index > len(channels):
+			index = 0
+		if index > 0:
+			versionInfo.updateVersionType = channels[index]
 		NVDASettingsDialog.categoryClasses.append(UpdateChannelPanel)
 
 	def terminate(self):
 		global originalChannel
 		try:
 			NVDASettingsDialog.categoryClasses.remove(UpdateChannelPanel)
-			versionInfo.updateVersionType=originalChannel
-			originalChannel=None
+			versionInfo.updateVersionType = originalChannel
+			originalChannel = None
 		except:
 			pass
