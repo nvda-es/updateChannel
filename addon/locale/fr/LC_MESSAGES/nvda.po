@@ -1,0 +1,83 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the updateChannels package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: updateChannel 1.0\n"
+"Report-Msgid-Bugs-To: nvda-translations@freelists.org\n"
+"POT-Creation-Date: 2019-10-04 18:41+0200\n"
+"PO-Revision-Date: 2021-01-25 21:26+0100\n"
+"Last-Translator: Rémy Ruiz <remyruiz@gmail.com>\n"
+"Language-Team: Rémy Ruiz <remyruiz@gmail.com>\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.12\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. TRANSLATORS: default channel option in the combo box
+#: addon\globalPlugins\updateChannel.py:29
+msgid "Default"
+msgstr "Défaut"
+
+#. TRANSLATORS: stable releases option in the combo box
+#: addon\globalPlugins\updateChannel.py:31
+msgid "Stable"
+msgstr "Stable"
+
+#. TRANSLATORS: stable, release candidate and beta releases option in the combo box
+#: addon\globalPlugins\updateChannel.py:33
+msgid "Stable, rc and beta"
+msgstr "Stable, rc et bêta"
+
+#. TRANSLATORS: alpha snapshots option in the combo box
+#: addon\globalPlugins\updateChannel.py:35
+msgid "Alpha (snapshots)"
+msgstr "Alpha (versions de développement)"
+
+#. TRANSLATORS: beta snapshots option in the combo box
+#: addon\globalPlugins\updateChannel.py:37
+msgid "Beta (snapshots)"
+msgstr "Bêta (versions de développement)"
+
+#. TRANSLATORS: rc snapshots option in the combo box
+#: addon\globalPlugins\updateChannel.py:39
+msgid "RC (snapshots)"
+msgstr "RC (versions de développement)"
+
+#. TRANSLATORS: disable updates option in the combo box
+#: addon\globalPlugins\updateChannel.py:41
+msgid "Disable updates (not recommended)"
+msgstr "Désactiver les mises à jour (non recommandées)"
+
+#. TRANSLATORS: title for the Update Channel settings category
+#. TRANSLATORS: label for available update channels in a combo box
+#: addon\globalPlugins\updateChannel.py:46
+#: addon\globalPlugins\updateChannel.py:51
+msgid "Update channel"
+msgstr "Canal de mise à jour"
+
+#. Add-on summary, usually the user visible name of the addon.
+#. Translators: Summary for this add-on to be shown on installation and add-on information.
+#: buildVars.py:17
+msgid "Update channel selector"
+msgstr "Sélecteur du canal de mise à jour"
+
+#. Add-on description
+#. Translators: Long description to be shown for this add-on on add-on information from add-ons manager
+#: buildVars.py:20
+msgid ""
+"This add-on allows you to switch quickly between NVDA snapshots and release "
+"types. Go to the update channel category on the NVDA settings dialog, choose "
+"your update channel and check for updates from the NVDA help menu. Choose "
+"the stable option and update again to return to an official release."
+msgstr ""
+"Cette extension vous permet de changer rapidement entre les types de "
+"versions de développement de NVDA et releases. Accédez à  la catégorie Canal "
+"de mise à jour du dialogue Paramètres de NVDA, choisissez votre   canal de "
+"mise à jour  et recherchez des mises à jour à partir du menu Aide de NVDA. "
+"Choisissez l'option stable et mettez à jour à nouveau pour revenir à une "
+"version officielle."
