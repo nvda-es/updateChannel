@@ -62,20 +62,23 @@ class UpdateChannelPanel(SettingsPanel):
 			# Use normal profile only if possible
 			config.conf.profiles[0]['updateChannel']['channel'] = self.channels.Selection
 		except:
-			# When configuring for the first time, use general configuration to create required keys in the normal profile
-			config.conf['updateChannel']['channel'] = self.channels.Selection
+			# When configuring for the first time, required keys are created in the normal profile
+			config.conf.profiles[0]['updateChannel'] = {'channel': self.channels.Selection}
 		if self.channels.Selection == 0:
 			versionInfo.updateVersionType = originalChannel
 		else:
 			versionInfo.updateVersionType = channels[config.conf.profiles[0]['updateChannel']['channel']]
 		# This prevents an issue caused when updates were downloaded without installing and the channel was changed. Reset the state dictionary and save it
-		updateCheck.state['lastCheck'] = 0
-		updateCheck.state['pendingUpdateAPIVersion'] = (0, 0, 0)
-		updateCheck.state['pendingUpdateBackCompatToAPIVersion'] = (0, 0, 0)
-		updateCheck.state['dontRemindVersion'] = None
-		updateCheck.state['pendingUpdateFile'] = None
-		updateCheck.state['pendingUpdateVersion'] = None
-		updateCheck.saveState()
+		try:
+			updateCheck.state['lastCheck'] = 0
+			updateCheck.state['pendingUpdateAPIVersion'] = (0, 0, 0)
+			updateCheck.state['pendingUpdateBackCompatToAPIVersion'] = (0, 0, 0)
+			updateCheck.state['dontRemindVersion'] = None
+			updateCheck.state['pendingUpdateFile'] = None
+			updateCheck.state['pendingUpdateVersion'] = None
+			updateCheck.saveState()
+		except:  # updateCheck module was not imported
+			pass
 
 
 class GlobalPlugin(globalPluginHandler.GlobalPlugin):
