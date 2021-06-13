@@ -15,6 +15,7 @@ try:
 except:
 	updateCheck = None
 import globalVars
+from threading import Thread
 
 addonHandler.initTranslation()
 originalChannel = None
@@ -41,7 +42,6 @@ channelDescriptions = [
 	_("Disable updates (not recommended)")
 ]
 
-
 class UpdateChannelPanel(SettingsPanel):
 	# TRANSLATORS: title for the Update Channel settings category
 	title = _("Update channel")
@@ -56,6 +56,78 @@ class UpdateChannelPanel(SettingsPanel):
 		except:
 			# When using for the first time, read from general configuration
 			self.channels.Selection = config.conf['updateChannel']['channel']
+		# If updateCheck was not imported correctly next part is skipped.
+		if updateCheck:
+			# Add an edit box where information about the selected channel (such as the version to be downloaded) is displayed.
+			self.channels.Bind(wx.EVT_CHOICE, self.onChoice)
+			self.channelInfo = helper.addItem(wx.TextCtrl(self, style=wx.TE_READONLY, value = ""))
+			self.availableUpdates = {}
+			# It is done in a separate thread so as not to slow down the execution.
+			self.thGetAvailableUpdates = Thread(target=self.getAvailableUpdates)
+			self.thGetAvailableUpdates.start()
+
+	def getAvailableUpdates(self):
+		""" Retrieves the information about the version to download for each update channel. """
+		currentChannel = versionInfo.updateVersionType
+		for channel in channels:
+			if channel == "default" or not channel:
+				continue
+			try:
+				versionInfo.updateVersionType = channel
+				self.availableUpdates[channel] = updateCheck.checkForUpdate()
+				if not self.availableUpdates[channel]: self.availableUpdates[channel] = 1 # Already updated
+			except:
+				self.availableUpdates[channel] = -1 # An error occurred
+			finally:
+				# Don't wait for wx.EVT_CHOICE, update selected channel in self.channels now.
+				try:
+					if channel == channels[self.channels.Selection]:
+						self.setUpdateInfo(self.availableUpdates[channel])
+				except RuntimeError: # Occurs when UpdateChannelPanel closes before the thread has finished.
+					try:
+						# updateVersionType has been modified by the thread; if it is interrupted, before terminating it, updateVersionType must receive the correct value.
+						if channels[config.conf.profiles[0]['updateChannel']['channel']] == 'default':
+							versionInfo.updateVersionType = originalChannel
+						else:
+							versionInfo.updateVersionType = channels[config.conf.profiles[0]['updateChannel']['channel']]
+					except KeyError:
+						versionInfo.updateVersionType = originalChannel
+					return
+		versionInfo.updateVersionType = currentChannel
+
+	def setUpdateInfo(self, updateVersionInfo):
+		""" Select the appropriate message and put it in the edit box. """
+		if channels[self.channels.Selection] == "default":
+			try:
+				updateVersionInfo = self.availableUpdates[originalChannel]
+			except KeyError:
+				updateVersionInfo = None
+		if updateVersionInfo:
+			try:
+				channelInfo = "%s (apiVersion %s)" % (updateVersionInfo["version"], updateVersionInfo["apiVersion"])
+			except:
+				if updateVersionInfo < 0:
+					# TRANSLATORS: Message displayed when an error occurred and the channel update information could not be retrieved.
+					channelInfo  = _("Fail retrieving update info")
+				else:
+					# TRANSLATORS: Message displayed when there are no updates available on the selected channel.
+					channelInfo = _("Already updated")
+		else:
+			if self.thGetAvailableUpdates.isAlive():
+				# TRANSLATORS: Message displayed when retrieval of update information has not yet been completed.
+				channelInfo = _("searching update info")
+		if channels[self.channels.Selection] == None:
+			# TRANSLATORS: When disable updates has been selected, the current version information is displayed.
+			channelInfo = _("Current version: %s build %s") % (versionInfo.version, versionInfo.version_build)
+		self.channelInfo.Value = channelInfo
+
+	def onChoice(self, evt):
+		""" Updates the channel information when the selection is changed. """
+		try:
+			updateVersionInfo = self.availableUpdates[channels[self.channels.Selection]]
+		except KeyError:
+			updateVersionInfo  = None
+		self.setUpdateInfo(updateVersionInfo)
 
 	def onSave(self):
 		try:
