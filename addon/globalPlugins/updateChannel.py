@@ -60,7 +60,14 @@ class UpdateChannelPanel(SettingsPanel):
 		if updateCheck:
 			# Add an edit box where information about the selected channel (such as the version to be downloaded) is displayed.
 			self.channels.Bind(wx.EVT_CHOICE, self.onChoice)
-			self.channelInfo = helper.addItem(wx.TextCtrl(self, style=wx.TE_READONLY, value = ""))
+			self.channelInfo = helper.addItem(wx.TextCtrl(self, style=wx.TE_RICH|wx.TE_NO_VSCROLL|wx.TE_WORDWRAP|wx.TE_MULTILINE|wx.TE_READONLY, value = "", size=(300,20)))
+			self.channelInfo.Bind(wx.EVT_TEXT, self.onText)
+			self.channelInfo.Disable()
+			# Also, create links to download and view changelog.
+			self.download = helper.addItem(wx.adv.HyperlinkCtrl(self, style=wx.adv.HL_CONTEXTMENU))
+			self.download.Hide()
+			self.changelog = helper.addItem(wx.adv.HyperlinkCtrl(self, style=wx.adv.HL_CONTEXTMENU, label=_("View changelog")))
+			self.changelog.Hide()
 			self.availableUpdates = {}
 			# It is done in a separate thread so as not to slow down the execution.
 			self.thGetAvailableUpdates = Thread(target=self.getAvailableUpdates)
@@ -96,7 +103,9 @@ class UpdateChannelPanel(SettingsPanel):
 		versionInfo.updateVersionType = currentChannel
 
 	def setUpdateInfo(self, updateVersionInfo):
-		""" Select the appropriate message and put it in the edit box. """
+		""" Select the appropriate message and put it in the edit box.
+		Also, updates de hiperlinks. """
+		showLinks = False
 		if channels[self.channels.Selection] == "default":
 			try:
 				updateVersionInfo = self.availableUpdates[originalChannel]
@@ -104,7 +113,18 @@ class UpdateChannelPanel(SettingsPanel):
 				updateVersionInfo = None
 		if updateVersionInfo:
 			try:
-				channelInfo = "%s (apiVersion %s)" % (updateVersionInfo["version"], updateVersionInfo["apiVersion"])
+				channelInfo = updateVersionInfo["version"]
+				if "apiVersion" in updateVersionInfo and updateVersionInfo["version"] != updateVersionInfo["apiVersion"]:
+					channelInfo = "%s (apiVersion %s)" % (channelInfo, updateVersionInfo["apiVersion"])
+				self.download.SetLabel(_("Download now %s") % updateVersionInfo["version"])
+				self.download.SetURL(updateVersionInfo["launcherUrl"])
+				if not self.download.IsShown(): self.download.Show()
+				if "changesUrl" in updateVersionInfo:
+					self.changelog.SetURL(updateVersionInfo["changesUrl"])
+					if not self.changelog.IsShown(): self.changelog.Show()
+				else:
+					if self.changelog.IsShown(): self.changelog.Hide()
+				showLinks = True
 			except:
 				if updateVersionInfo < 0:
 					# TRANSLATORS: Message displayed when an error occurred and the channel update information could not be retrieved.
@@ -120,6 +140,9 @@ class UpdateChannelPanel(SettingsPanel):
 			# TRANSLATORS: When disable updates has been selected, the current version information is displayed.
 			channelInfo = _("Current version: %s build %s") % (versionInfo.version, versionInfo.version_build)
 		self.channelInfo.Value = channelInfo
+		if not showLinks:
+			if self.download.IsShown(): self.download.Hide()
+			if self.changelog.IsShown(): self.changelog.Hide()
 
 	def onChoice(self, evt):
 		""" Updates the channel information when the selection is changed. """
@@ -128,6 +151,12 @@ class UpdateChannelPanel(SettingsPanel):
 		except KeyError:
 			updateVersionInfo  = None
 		self.setUpdateInfo(updateVersionInfo)
+
+	def onText(self, evt):
+		if self.channelInfo.GetValue():
+			if not self.channelInfo.IsEnabled(): self.channelInfo.Enable()
+		else:
+			if self.channelInfo.IsEnabled(): self.channelInfo.Disable()
 
 	def onSave(self):
 		try:
