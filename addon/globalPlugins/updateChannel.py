@@ -15,6 +15,7 @@ try:
 except:
 	updateCheck = None
 import globalVars
+from threading import Thread, Lock
 
 addonHandler.initTranslation()
 originalChannel = None
@@ -41,9 +42,8 @@ channelDescriptions = [
 	_("Disable updates (not recommended)")
 ]
 
-
 class UpdateChannelPanel(SettingsPanel):
-	# TRANSLATORS: title for the Update Channel settings category
+# TRANSLATORS: title for the Update Channel settings category
 	title = _("Update channel")
 
 	def makeSettings(self, sizer):
@@ -56,8 +56,127 @@ class UpdateChannelPanel(SettingsPanel):
 		except:
 			# When using for the first time, read from general configuration
 			self.channels.Selection = config.conf['updateChannel']['channel']
+		# If updateCheck was not imported correctly next part is skipped.
+		if updateCheck:
+			# Add an edit box where information about the selected channel (such as the version to be downloaded) is displayed.
+			self.channels.Bind(wx.EVT_CHOICE, self.onChoice)
+			self.channelInfo = helper.addItem(wx.TextCtrl(self, style=wx.TE_RICH|wx.TE_NO_VSCROLL|wx.TE_WORDWRAP|wx.TE_MULTILINE|wx.TE_READONLY, value = "", size=(300,20)))
+			self.channelInfo.Bind(wx.EVT_TEXT, self.onText)
+			self.channelInfo.Disable()
+			# Also, create hyperlinks to download and view changelog.
+			self.download = helper.addItem(wx.adv.HyperlinkCtrl(self, style=wx.adv.HL_CONTEXTMENU))
+			self.download.Hide()
+			self.changelog = helper.addItem(wx.adv.HyperlinkCtrl(self, style=wx.adv.HL_CONTEXTMENU, label=_("View changelog")))
+			self.changelog.Hide()
+			self.availableUpdates = {}
+			# It is done in a separate thread so as not to slow down the execution.
+			self.lockVersionType = Lock()
+			self.lockAvailableUpdates = Lock()
+			self.flagSaved = False
+			self.flagDiscarded = False
+			self.thGetAvailableUpdates = Thread(target=self.getAvailableUpdates, args=(versionInfo.updateVersionType,))
+			self.thGetAvailableUpdates.setDaemon(True)
+			self.thGetAvailableUpdates.start()
+
+	def getAvailableUpdates(self, currentChannel):
+		""" Retrieves the information about the version to download for each update channel. """
+		for channel in channels:
+			if channel == "default" or not channel:
+				continue
+			self.lockVersionType.acquire()
+			self.lockAvailableUpdates.acquire()
+			if self.flagSaved or self.flagDiscarded:
+				break
+			try:
+				versionInfo.updateVersionType = channel
+				self.availableUpdates[channel] = updateCheck.checkForUpdate()
+				if not self.availableUpdates[channel]: self.availableUpdates[channel] = 1 # Already updated
+			except:
+				self.availableUpdates[channel] = -1 # An error occurred
+			else:
+				if self.flagSaved or self.flagDiscarded:
+					break
+				# Don't wait for wx.EVT_CHOICE, update selected channel in self.channels now.
+				try:
+					if channel == channels[self.channels.Selection]:
+						self.displayUpdateInfo(self.availableUpdates[channel])
+				except Exception:
+					if self.lockAvailableUpdates.locked(): self.lockAvailableUpdates.release()
+					if self.lockVersionType.locked(): self.lockVersionType.release()
+					raise Exception
+			finally:
+				if self.lockAvailableUpdates.locked(): self.lockAvailableUpdates.release()
+				self.lockVersionType.release()
+		self.lockVersionType.acquire()
+		if not (self.flagSaved and not self.flagDiscarded):
+			versionInfo.updateVersionType = currentChannel
+		self.lockVersionType.release()
+
+	def displayUpdateInfo(self, updateVersionInfo):
+		""" Select the appropriate message and put it in the edit box and updates de hyperlinks. """
+		showLinks = False
+		if channels[self.channels.Selection] == "default":
+			try:
+				self.lockAvailableUpdates.acquire()
+				updateVersionInfo = self.availableUpdates[originalChannel]
+			except KeyError:
+				updateVersionInfo = None
+			finally:
+				self.lockAvailableUpdates.release()
+		if updateVersionInfo:
+			try:
+				channelInfo = updateVersionInfo["version"]
+				if "apiVersion" in updateVersionInfo and updateVersionInfo["version"] != updateVersionInfo["apiVersion"]:
+					channelInfo = "%s (apiVersion %s)" % (channelInfo, updateVersionInfo["apiVersion"])
+				self.download.SetLabel(_("Download now %s") % updateVersionInfo["version"])
+				self.download.SetURL(updateVersionInfo["launcherUrl"])
+				if not self.download.IsShown(): self.download.Show()
+				if "changesUrl" in updateVersionInfo:
+					self.changelog.SetURL(updateVersionInfo["changesUrl"])
+					if not self.changelog.IsShown(): self.changelog.Show()
+				else:
+					if self.changelog.IsShown(): self.changelog.Hide()
+				showLinks = True
+			except:
+				if updateVersionInfo < 0:
+					# TRANSLATORS: Message displayed when an error occurred and the channel update information could not be retrieved.
+					channelInfo  = _("Fail retrieving update info")
+				else:
+					# TRANSLATORS: Message displayed when there are no updates available on the selected channel.
+					channelInfo = _("Already updated")
+		else:
+			if self.thGetAvailableUpdates.isAlive():
+				# TRANSLATORS: Message displayed when retrieval of update information has not yet been completed.
+				channelInfo = _("searching update info")
+			else:
+				channelInfo = ""
+		if channels[self.channels.Selection] == None:
+			# TRANSLATORS: When disable updates has been selected, the current version information is displayed.
+			channelInfo = _("Current version: %s build %s") % (versionInfo.version, versionInfo.version_build)
+		self.channelInfo.Value = channelInfo
+		if not showLinks:
+			if self.download.IsShown(): self.download.Hide()
+			if self.changelog.IsShown(): self.changelog.Hide()
+
+	def onChoice(self, evt):
+		""" Updates the channel information when the selection is changed. """
+		try:
+			self.lockAvailableUpdates.acquire()
+			updateVersionInfo = self.availableUpdates[channels[self.channels.Selection]]
+		except KeyError:
+			updateVersionInfo  = None
+		finally:
+			self.lockAvailableUpdates.release()
+		self.displayUpdateInfo(updateVersionInfo)
+
+	def onText(self, evt):
+		if self.channelInfo.GetValue():
+			if not self.channelInfo.IsEnabled(): self.channelInfo.Enable()
+		else:
+			if self.channelInfo.IsEnabled(): self.channelInfo.Disable()
 
 	def onSave(self):
+		self.lockVersionType.acquire()
 		try:
 			# Use normal profile only if possible
 			config.conf.profiles[0]['updateChannel']['channel'] = self.channels.Selection
@@ -79,7 +198,13 @@ class UpdateChannelPanel(SettingsPanel):
 			updateCheck.saveState()
 		except:  # updateCheck module was not imported
 			pass
+		self.flagSaved = True
+		self.lockVersionType.release()
 
+	def onDiscard(self):
+		self.lockVersionType.acquire()
+		self.flagDiscarded = True
+		self.lockVersionType.release()
 
 class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	def __init__(self):
