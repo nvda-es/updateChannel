@@ -15,7 +15,7 @@ try:
 except:
 	updateCheck = None
 import globalVars
-from threading import Thread, Lock
+from threading import Thread
 
 addonHandler.initTranslation()
 originalChannel = None
@@ -43,7 +43,7 @@ channelDescriptions = [
 ]
 
 class UpdateChannelPanel(SettingsPanel):
-# TRANSLATORS: title for the Update Channel settings category
+	# TRANSLATORS: title for the Update Channel settings category
 	title = _("Update channel")
 
 	def makeSettings(self, sizer):
@@ -70,10 +70,6 @@ class UpdateChannelPanel(SettingsPanel):
 			self.changelog.Hide()
 			self.availableUpdates = {}
 			# It is done in a separate thread so as not to slow down the execution.
-			self.lockVersionType = Lock()
-			self.lockAvailableUpdates = Lock()
-			self.flagSaved = False
-			self.flagDiscarded = False
 			self.thGetAvailableUpdates = Thread(target=self.getAvailableUpdates, args=(versionInfo.updateVersionType,))
 			self.thGetAvailableUpdates.setDaemon(True)
 			self.thGetAvailableUpdates.start()
@@ -83,46 +79,24 @@ class UpdateChannelPanel(SettingsPanel):
 		for channel in channels:
 			if channel == "default" or not channel:
 				continue
-			self.lockVersionType.acquire()
-			self.lockAvailableUpdates.acquire()
-			if self.flagSaved or self.flagDiscarded:
-				break
 			try:
 				versionInfo.updateVersionType = channel
 				self.availableUpdates[channel] = updateCheck.checkForUpdate()
 				if not self.availableUpdates[channel]: self.availableUpdates[channel] = 1 # Already updated
 			except:
 				self.availableUpdates[channel] = -1 # An error occurred
-			else:
-				if self.flagSaved or self.flagDiscarded:
-					break
-				# Don't wait for wx.EVT_CHOICE, update selected channel in self.channels now.
-				try:
-					if channel == channels[self.channels.Selection]:
-						self.displayUpdateInfo(self.availableUpdates[channel])
-				except Exception:
-					if self.lockAvailableUpdates.locked(): self.lockAvailableUpdates.release()
-					if self.lockVersionType.locked(): self.lockVersionType.release()
-					raise Exception
-			finally:
-				if self.lockAvailableUpdates.locked(): self.lockAvailableUpdates.release()
-				self.lockVersionType.release()
-		self.lockVersionType.acquire()
-		if not (self.flagSaved and not self.flagDiscarded):
-			versionInfo.updateVersionType = currentChannel
-		self.lockVersionType.release()
+		# Don't wait for wx.EVT_CHOICE, update selected channel in self.channels now.
+		self.displayUpdateInfo(channels[self.channels.Selection])
+		versionInfo.updateVersionType = currentChannel
 
 	def displayUpdateInfo(self, updateVersionInfo):
 		""" Select the appropriate message and put it in the edit box and updates de hyperlinks. """
 		showLinks = False
 		if channels[self.channels.Selection] == "default":
 			try:
-				self.lockAvailableUpdates.acquire()
 				updateVersionInfo = self.availableUpdates[originalChannel]
 			except KeyError:
 				updateVersionInfo = None
-			finally:
-				self.lockAvailableUpdates.release()
 		if updateVersionInfo:
 			try:
 				channelInfo = updateVersionInfo["version"]
@@ -161,12 +135,9 @@ class UpdateChannelPanel(SettingsPanel):
 	def onChoice(self, evt):
 		""" Updates the channel information when the selection is changed. """
 		try:
-			self.lockAvailableUpdates.acquire()
 			updateVersionInfo = self.availableUpdates[channels[self.channels.Selection]]
 		except KeyError:
 			updateVersionInfo  = None
-		finally:
-			self.lockAvailableUpdates.release()
 		self.displayUpdateInfo(updateVersionInfo)
 
 	def onText(self, evt):
@@ -176,7 +147,6 @@ class UpdateChannelPanel(SettingsPanel):
 			if self.channelInfo.IsEnabled(): self.channelInfo.Disable()
 
 	def onSave(self):
-		self.lockVersionType.acquire()
 		try:
 			# Use normal profile only if possible
 			config.conf.profiles[0]['updateChannel']['channel'] = self.channels.Selection
@@ -198,13 +168,7 @@ class UpdateChannelPanel(SettingsPanel):
 			updateCheck.saveState()
 		except:  # updateCheck module was not imported
 			pass
-		self.flagSaved = True
-		self.lockVersionType.release()
 
-	def onDiscard(self):
-		self.lockVersionType.acquire()
-		self.flagDiscarded = True
-		self.lockVersionType.release()
 
 class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	def __init__(self):
