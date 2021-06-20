@@ -79,6 +79,8 @@ class UpdateChannelPanel(SettingsPanel):
 	def getAvailableUpdates(self, currentChannel):
 		""" Retrieves the information about the version to download for each update channel. """
 		for channel in channels:
+			if self.status > 0:
+				break
 			if channel == "default" or not channel:
 				continue
 			try:
