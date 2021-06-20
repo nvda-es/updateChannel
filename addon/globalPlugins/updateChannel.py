@@ -15,7 +15,7 @@ try:
 except:
 	updateCheck = None
 import globalVars
-from threading import Thread
+from threading import Thread, Event
 
 addonHandler.initTranslation()
 originalChannel = None
@@ -69,6 +69,8 @@ class UpdateChannelPanel(SettingsPanel):
 			self.changelog = helper.addItem(wx.adv.HyperlinkCtrl(self, style=wx.adv.HL_CONTEXTMENU, label=_("View changelog")))
 			self.changelog.Hide()
 			self.availableUpdates = {}
+			self.status = 0
+			self.event = Event()
 			# It is done in a separate thread so as not to slow down the execution.
 			self.thGetAvailableUpdates = Thread(target=self.getAvailableUpdates, args=(versionInfo.updateVersionType,))
 			self.thGetAvailableUpdates.setDaemon(True)
@@ -85,9 +87,16 @@ class UpdateChannelPanel(SettingsPanel):
 				if not self.availableUpdates[channel]: self.availableUpdates[channel] = 1 # Already updated
 			except:
 				self.availableUpdates[channel] = -1 # An error occurred
-		# Don't wait for wx.EVT_CHOICE, update selected channel in self.channels now.
-		self.displayUpdateInfo(channels[self.channels.Selection])
-		versionInfo.updateVersionType = currentChannel
+		try:
+			# Don't wait for wx.EVT_CHOICE, update selected channel in self.channels now.
+			self.displayUpdateInfo(channels[self.channels.Selection])
+		except:
+			pass
+		self.event.wait()
+		if self.status == 1:
+			versionInfo.updateVersionType = channels[config.conf.profiles[0]['updateChannel']['channel']] if config.conf.profiles[0]['updateChannel']['channel'] is not 0 else originalChannel
+		elif self.status == 2:
+			versionInfo.updateVersionType = currentChannel
 
 	def displayUpdateInfo(self, updateVersionInfo):
 		""" Select the appropriate message and put it in the edit box and updates de hyperlinks. """
@@ -168,6 +177,12 @@ class UpdateChannelPanel(SettingsPanel):
 			updateCheck.saveState()
 		except:  # updateCheck module was not imported
 			pass
+		self.status = 1
+		self.event.set()
+
+	def onDiscard(self):
+		self.status = 2
+		self.event.set()
 
 
 class GlobalPlugin(globalPluginHandler.GlobalPlugin):
