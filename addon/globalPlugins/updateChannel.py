@@ -87,6 +87,7 @@ class UpdateChannelPanel(SettingsPanel):
 				if not self.availableUpdates[channel]: self.availableUpdates[channel] = 1 # Already updated
 			except:
 				self.availableUpdates[channel] = -1 # An error occurred
+		versionInfo.updateVersionType = currentChannel
 		try:
 			# Don't wait for wx.EVT_CHOICE, update selected channel in self.channels now.
 			self.displayUpdateInfo(channels[self.channels.Selection])
