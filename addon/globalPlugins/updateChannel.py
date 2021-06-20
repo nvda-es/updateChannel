@@ -94,6 +94,8 @@ class UpdateChannelPanel(SettingsPanel):
 			# Don't wait for wx.EVT_CHOICE, update selected channel in self.channels now.
 			if self.channels.Selection == 0:
 				self.displayUpdateInfo(self.availableUpdates[originalChannel])
+			elif channels[self.channels.Selection] is None:
+				self.displayUpdateInfo(None)
 			else:
 				self.displayUpdateInfo(self.availableUpdates[channels[self.channels.Selection]])
 		except:
