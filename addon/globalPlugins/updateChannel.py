@@ -164,6 +164,7 @@ class UpdateChannelPanel(SettingsPanel):
 			if self.channelInfo.IsEnabled(): self.channelInfo.Disable()
 
 	def onSave(self):
+		config.conf.profiles[-1].name = self.originalProfileName
 		try:
 			# Use normal profile only if possible
 			config.conf.profiles[0]['updateChannel']['channel'] = self.channels.Selection
@@ -189,9 +190,18 @@ class UpdateChannelPanel(SettingsPanel):
 		self.event.set()
 
 	def onDiscard(self):
+		config.conf.profiles[-1].name = self.originalProfileName
 		self.status = 2
 		self.event.set()
 
+	def onPanelActivated(self):
+		self.originalProfileName = config.conf.profiles[-1].name
+		config.conf.profiles[-1].name = None
+		self.Show()
+
+	def onPanelDeactivated(self):
+		config.conf.profiles[-1].name = self.originalProfileName
+		self.Hide()
 
 class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	def __init__(self):
