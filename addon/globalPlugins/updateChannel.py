@@ -24,7 +24,7 @@ confspec = {
 }
 config.conf.spec['updateChannel'] = confspec
 
-channels = ['default', 'stable', 'beta', 'snapshot:alpha', 'snapshot:beta', 'snapshot:rc', None]
+channels = ['default', 'stable', 'beta', 'snapshot:alpha', None]
 channelDescriptions = [
 	# TRANSLATORS: default channel option in the combo box
 	_("Default"),
@@ -34,10 +34,6 @@ channelDescriptions = [
 	_("Stable, rc and beta"),
 	# TRANSLATORS: alpha snapshots option in the combo box
 	_("Alpha (snapshots)"),
-	# TRANSLATORS: beta snapshots option in the combo box
-	_("Beta (snapshots)"),
-	# TRANSLATORS: rc snapshots option in the combo box
-	_("RC (snapshots)"),
 	# TRANSLATORS: disable updates option in the combo box
 	_("Disable updates (not recommended)")
 ]
