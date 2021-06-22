@@ -62,6 +62,7 @@ class UpdateChannelPanel(SettingsPanel):
 			# Also, create hyperlinks to download and view changelog.
 			self.download = helper.addItem(wx.adv.HyperlinkCtrl(self, style=wx.adv.HL_CONTEXTMENU))
 			self.download.Hide()
+			# TRANSLATORS: label of the View changelog hyperlink in the add-on settings panel
 			self.changelog = helper.addItem(wx.adv.HyperlinkCtrl(self, style=wx.adv.HL_CONTEXTMENU, label=_("View changelog")))
 			self.changelog.Hide()
 			self.availableUpdates = {}
@@ -114,7 +115,9 @@ class UpdateChannelPanel(SettingsPanel):
 			try:
 				channelInfo = updateVersionInfo["version"]
 				if "apiVersion" in updateVersionInfo and updateVersionInfo["version"] != updateVersionInfo["apiVersion"]:
-					channelInfo = "%s (apiVersion %s)" % (channelInfo, updateVersionInfo["apiVersion"])
+					# TRANSLATORS: information displayed when there is a new version available for download
+					channelInfo = _("%s (apiVersion %s)") % (channelInfo, updateVersionInfo["apiVersion"])
+				# TRANSLATORS: label of the download hyperlink located in the add-on settings panel
 				self.download.SetLabel(_("Download now %s") % updateVersionInfo["version"])
 				self.download.SetURL(updateVersionInfo["launcherUrl"])
 				if not self.download.IsShown(): self.download.Show()
