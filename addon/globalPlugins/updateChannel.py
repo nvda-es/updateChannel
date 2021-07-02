@@ -116,7 +116,7 @@ class UpdateChannelPanel(SettingsPanel):
 				channelInfo = updateVersionInfo["version"]
 				if "apiVersion" in updateVersionInfo and updateVersionInfo["version"] != updateVersionInfo["apiVersion"]:
 					# TRANSLATORS: information displayed when there is a new version available for download
-					channelInfo = _("%s (apiVersion %s)") % (channelInfo, updateVersionInfo["apiVersion"])
+					channelInfo = _("{channelInfo} (apiVersion {APIVersion})").format(channelInfo=channelInfo, APIVersion=updateVersionInfo["apiVersion"])
 				# TRANSLATORS: label of the download hyperlink located in the add-on settings panel
 				self.download.SetLabel(_("Download now %s") % updateVersionInfo["version"])
 				self.download.SetURL(updateVersionInfo["launcherUrl"])
@@ -142,7 +142,7 @@ class UpdateChannelPanel(SettingsPanel):
 				channelInfo = ""
 		if channels[self.channels.Selection] == None:
 			# TRANSLATORS: When disable updates has been selected, the current version information is displayed.
-			channelInfo = _("Current version: %s build %s") % (versionInfo.version, versionInfo.version_build)
+			channelInfo = _("Current version: {version} build {version_build}").format(version=versionInfo.version, version_build=versionInfo.version_build)
 		self.channelInfo.Value = channelInfo
 		if not showLinks:
 			if self.download.IsShown(): self.download.Hide()
