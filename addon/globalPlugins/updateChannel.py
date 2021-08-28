@@ -72,6 +72,7 @@ class UpdateChannelPanel(SettingsPanel):
 			self.thGetAvailableUpdates = Thread(target=self.getAvailableUpdates, args=(versionInfo.updateVersionType,))
 			self.thGetAvailableUpdates.setDaemon(True)
 			self.thGetAvailableUpdates.start()
+			self.onChoice(None)
 
 	def getAvailableUpdates(self, currentChannel):
 		""" Retrieves the information about the version to download for each update channel. """
