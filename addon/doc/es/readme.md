@@ -12,11 +12,20 @@ Puedes cambiar el canal de actualización yendo al menú NVDA, Preferencias, Opc
 * Estable: forzar canal de actualización a estable. Útil cuando quieres volver a una versión estable desde una versión de desarrollo.
 * Estable, rc y beta: este es el canal de las versiones beta. Recibirás la primera versión beta una vez esta sea liberada. Este canal te permite actualizar pasando por betas y candidatas a liberación hasta que alcances la próxima versión estable.
 * Alfa (versiones de desarrollo): elige esta opción para actualizar a la alfa más reciente. Las versiones de desarrollo alfa te permiten probar nuevas funciones, pero son bastante inestables. Por favor, ten cuidado.
-* Beta (versiones de desarrollo): elige esta opción para actualizar a la beta más reciente construida desde la rama beta. El código beta ha sido más probado que el alfa. Sin embargo, hasta que la versión oficial beta no sea liberada, puede no ser suficientemente estable para la mayoría de los usuarios.
-* RC (versiones de desarrollo): elige esta opción para actualizar a la candidata a liberación más reciente construida desde la rama rc. El código rc ha sido más probado que el beta. Sin embargo, hasta que la versión oficial candidata a liberación no se publique, puede no ser suficientemente estable para la mayoría de los usuarios.
 * Deshabilitar actualizaciones (no recomendado): esta opción desactiva el canal de actualizaciones. Si buscas actualizaciones se mostrará un mensaje de error. Recuerda que puedes desactivar las actualizaciones automáticas desde la categoría de opciones generales. Usa esta opción sólo para hacer pruebas.
 
+En cuanto se abra el panel de opciones, se recuperará en segundo plano información sobre las actualizaciones disponibles en cada canal. Pulsa tab para navegar a un cuadro de edición de sólo lectura, donde podrás ver esta información. Esta información se actualizará dinámicamente cuando cambies el canal de actualización en el cuadro combinado. Si hay una actualización disponible en el canal seleccionado, aparecerán uno o dos enlaces al lado del cuadro de edición:
+
+* Descargar: pulsa la barra espaciadora sobre este enlace para abrirlo en tu navegador web y descargar el instalador más reciente.
+* Ver registro de cambios: pulsa la barra espaciadora sobre este enlace para abrir el documento Qué hay de nuevo en tu navegador web. En algunos canales, este enlace no se mostrará.
+
 ## Registro de cambios
+
+### Versión 1.1
+
+* Se han eliminado canales no soportados.
+* Traducciones actualizadas.
+* Se ha añadido información al panel de opciones sobre las actualizaciones disponibles actualmente.
 
 ### Versión 1.0
 
