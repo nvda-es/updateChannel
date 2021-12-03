@@ -1,0 +1,94 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the updateChannel package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: updateChannel 1.1\n"
+"Report-Msgid-Bugs-To: nvda-translations@groups.io\n"
+"POT-Creation-Date: 2021-11-17 12:20+0000\n"
+"PO-Revision-Date: 2021-11-30 09:20+0200\n"
+"Last-Translator: Jani Kinnunen <janikinnunen340@gmail.com>\n"
+"Language-Team: fi_FI <janikinnunen340@gmail.com>\n"
+"Language: fi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.6.11\n"
+
+#. TRANSLATORS: default channel option in the combo box
+msgid "Default"
+msgstr "Oletus"
+
+#. TRANSLATORS: stable releases option in the combo box
+msgid "Stable"
+msgstr "Vakaa"
+
+#. TRANSLATORS: stable, release candidate and beta releases option in the combo box
+msgid "Stable, rc and beta"
+msgstr "Vakaa, rc ja beeta"
+
+#. TRANSLATORS: alpha snapshots option in the combo box
+msgid "Alpha (snapshots)"
+msgstr "Alfa (kehitysversiot)"
+
+#. TRANSLATORS: disable updates option in the combo box
+msgid "Disable updates (not recommended)"
+msgstr "Poista päivitykset käytöstä (ei suositella)"
+
+#. TRANSLATORS: title for the Update Channel settings category
+#. TRANSLATORS: label for available update channels in a combo box
+msgid "Update channel"
+msgstr "Päivityskanava"
+
+#. TRANSLATORS: label of the View changelog hyperlink in the add-on settings panel
+msgid "View changelog"
+msgstr "Näytä muutosloki"
+
+#. TRANSLATORS: information displayed when there is a new version available for download
+#, python-brace-format
+msgid "{channelInfo} (apiVersion {APIVersion})"
+msgstr "{channelInfo} (ohjelmointirajapinnan versio {APIVersion})"
+
+#. TRANSLATORS: label of the download hyperlink located in the add-on settings panel
+#, python-format
+msgid "Download now %s"
+msgstr "Lataa nyt %s"
+
+#. TRANSLATORS: Message displayed when an error occurred and the channel update information could not be retrieved.
+msgid "Fail retrieving update info"
+msgstr "Päivitystietojen hakeminen epäonnistui"
+
+#. TRANSLATORS: Message displayed when there are no updates available on the selected channel.
+msgid "Already updated"
+msgstr "Ajan tasalla"
+
+#. TRANSLATORS: Message displayed when retrieval of update information has not yet been completed.
+msgid "searching update info"
+msgstr "Etsitään päivitystietoja"
+
+#. TRANSLATORS: When disable updates has been selected, the current version information is displayed.
+#, python-brace-format
+msgid "Current version: {version} build {version_build}"
+msgstr "Nykyinen versio: {version} koontiversio {version_build}"
+
+#. Add-on summary, usually the user visible name of the addon.
+#. Translators: Summary for this add-on to be shown on installation and add-on information.
+msgid "Update channel selector"
+msgstr "Päivityskanavan valitsin"
+
+#. Add-on description
+#. Translators: Long description to be shown for this add-on on add-on information from add-ons manager
+msgid ""
+"This add-on allows you to switch quickly between NVDA snapshots and release "
+"types. Go to the update channel category on the NVDA settings dialog, choose "
+"your update channel and check for updates from the NVDA help menu. Choose "
+"the stable option and update again to return to an official release."
+msgstr ""
+"Tämän lisäosan avulla voit nopeasti vaihtaa NVDA:n kehitysversioiden ja "
+"julkaisutyyppien välillä. Siirry NVDA:n asetusvalintaikkunassa "
+"Päivityskanava-kategoriaan, valitse haluamasi päivityskanava ja tarkista "
+"päivitykset NVDA:n Ohje-valikosta. Valitse Vakaa-vaihtoehto ja päivitä "
+"uudelleen palataksesi viralliseen versioon."
