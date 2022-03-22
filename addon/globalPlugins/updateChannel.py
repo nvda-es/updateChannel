@@ -1,7 +1,7 @@
 # Update channel addon for NVDA
 # This file is covered by the GNU General Public License.
 # See the file COPYING.txt for more details.
-# Copyright (C) 2021 Jose Manuel Delicado <jm.delicado@nvda.es>
+# Copyright (C) 2022 Jose Manuel Delicado <jm.delicado@nvda.es>
 
 import globalPluginHandler
 import addonHandler
@@ -12,7 +12,7 @@ from gui.settingsDialogs import SettingsPanel
 import wx
 try:
 	import updateCheck
-except:
+except Exception:
 	updateCheck = None
 import globalVars
 from threading import Thread, Event
@@ -38,6 +38,7 @@ channelDescriptions = [
 	_("Disable updates (not recommended)")
 ]
 
+
 class UpdateChannelPanel(SettingsPanel):
 	# TRANSLATORS: title for the Update Channel settings category
 	title = _("Update channel")
@@ -49,14 +50,14 @@ class UpdateChannelPanel(SettingsPanel):
 		try:
 			# Use normal profile only if possible
 			self.channels.Selection = int(config.conf.profiles[0]['updateChannel']['channel'])
-		except:
+		except Exception:
 			# When using for the first time, read from general configuration
 			self.channels.Selection = config.conf['updateChannel']['channel']
 		# If updateCheck was not imported correctly next part is skipped.
 		if updateCheck:
 			# Add an edit box where information about the selected channel (such as the version to be downloaded) is displayed.
 			self.channels.Bind(wx.EVT_CHOICE, self.onChoice)
-			self.channelInfo = helper.addItem(wx.TextCtrl(self, style=wx.TE_RICH|wx.TE_NO_VSCROLL|wx.TE_WORDWRAP|wx.TE_MULTILINE|wx.TE_READONLY, value = "", size=(300,20)))
+			self.channelInfo = helper.addItem(wx.TextCtrl(self, style=wx.TE_RICH | wx.TE_NO_VSCROLL | wx.TE_WORDWRAP | wx.TE_MULTILINE | wx.TE_READONLY, value="", size=(300, 20)))
 			self.channelInfo.Bind(wx.EVT_TEXT, self.onText)
 			self.channelInfo.Disable()
 			# Also, create hyperlinks to download and view changelog.
@@ -84,9 +85,10 @@ class UpdateChannelPanel(SettingsPanel):
 			try:
 				versionInfo.updateVersionType = channel
 				self.availableUpdates[channel] = updateCheck.checkForUpdate()
-				if not self.availableUpdates[channel]: self.availableUpdates[channel] = 1 # Already updated
-			except:
-				self.availableUpdates[channel] = -1 # An error occurred
+				if not self.availableUpdates[channel]:
+					self.availableUpdates[channel] = 1  # Already updated
+			except Exception:
+				self.availableUpdates[channel] = -1  # An error occurred
 		versionInfo.updateVersionType = currentChannel
 		try:
 			# Don't wait for wx.EVT_CHOICE, update selected channel in self.channels now.
@@ -96,11 +98,11 @@ class UpdateChannelPanel(SettingsPanel):
 				self.displayUpdateInfo(None)
 			else:
 				self.displayUpdateInfo(self.availableUpdates[channels[self.channels.Selection]])
-		except:
+		except Exception:
 			pass
 		self.event.wait()
 		if self.status == 1:
-			versionInfo.updateVersionType = channels[config.conf.profiles[0]['updateChannel']['channel']] if config.conf.profiles[0]['updateChannel']['channel'] is not 0 else originalChannel
+			versionInfo.updateVersionType = channels[config.conf.profiles[0]['updateChannel']['channel']] if config.conf.profiles[0]['updateChannel']['channel'] != 0 else originalChannel
 		elif self.status == 2:
 			versionInfo.updateVersionType = currentChannel
 
@@ -117,21 +119,26 @@ class UpdateChannelPanel(SettingsPanel):
 				channelInfo = updateVersionInfo["version"]
 				if "apiVersion" in updateVersionInfo and updateVersionInfo["version"] != updateVersionInfo["apiVersion"]:
 					# TRANSLATORS: information displayed when there is a new version available for download
-					channelInfo = _("{channelInfo} (apiVersion {APIVersion})").format(channelInfo=channelInfo, APIVersion=updateVersionInfo["apiVersion"])
+					channelInfo = _("{channelInfo} (apiVersion {APIVersion})").format(
+						channelInfo=channelInfo, APIVersion=updateVersionInfo["apiVersion"])
 				# TRANSLATORS: label of the download hyperlink located in the add-on settings panel
 				self.download.SetLabel(_("Download now %s") % updateVersionInfo["version"])
 				self.download.SetURL(updateVersionInfo["launcherUrl"])
-				if not self.download.IsShown(): self.download.Show()
+				if not self.download.IsShown():
+					self.download.Show()
 				if "changesUrl" in updateVersionInfo:
 					self.changelog.SetURL(updateVersionInfo["changesUrl"])
-					if not self.changelog.IsShown(): self.changelog.Show()
+					if not self.changelog.IsShown():
+						self.changelog.Show()
 				else:
-					if self.changelog.IsShown(): self.changelog.Hide()
+					if self.changelog.IsShown():
+						self.changelog.Hide()
 				showLinks = True
-			except:
+			except Exception:
 				if updateVersionInfo < 0:
-					# TRANSLATORS: Message displayed when an error occurred and the channel update information could not be retrieved.
-					channelInfo  = _("Fail retrieving update info")
+					# TRANSLATORS: Message displayed when an error occurred and the channel update information
+					# could not be retrieved.
+					channelInfo = _("Fail retrieving update info")
 				else:
 					# TRANSLATORS: Message displayed when there are no updates available on the selected channel.
 					channelInfo = _("Already updated")
@@ -141,41 +148,47 @@ class UpdateChannelPanel(SettingsPanel):
 				channelInfo = _("searching update info")
 			else:
 				channelInfo = ""
-		if channels[self.channels.Selection] == None:
+		if channels[self.channels.Selection] is None:
 			# TRANSLATORS: When disable updates has been selected, the current version information is displayed.
-			channelInfo = _("Current version: {version} build {version_build}").format(version=versionInfo.version, version_build=versionInfo.version_build)
+			channelInfo = _("Current version: {version} build {version_build}").format(
+				version=versionInfo.version, version_build=versionInfo.version_build)
 		self.channelInfo.Value = channelInfo
 		if not showLinks:
-			if self.download.IsShown(): self.download.Hide()
-			if self.changelog.IsShown(): self.changelog.Hide()
+			if self.download.IsShown():
+				self.download.Hide()
+			if self.changelog.IsShown():
+				self.changelog.Hide()
 
 	def onChoice(self, evt):
 		""" Updates the channel information when the selection is changed. """
 		try:
 			updateVersionInfo = self.availableUpdates[channels[self.channels.Selection]]
 		except KeyError:
-			updateVersionInfo  = None
+			updateVersionInfo = None
 		self.displayUpdateInfo(updateVersionInfo)
 
 	def onText(self, evt):
 		if self.channelInfo.GetValue():
-			if not self.channelInfo.IsEnabled(): self.channelInfo.Enable()
+			if not self.channelInfo.IsEnabled():
+				self.channelInfo.Enable()
 		else:
-			if self.channelInfo.IsEnabled(): self.channelInfo.Disable()
+			if self.channelInfo.IsEnabled():
+				self.channelInfo.Disable()
 
 	def onSave(self):
 		config.conf.profiles[-1].name = self.originalProfileName
 		try:
 			# Use normal profile only if possible
 			config.conf.profiles[0]['updateChannel']['channel'] = self.channels.Selection
-		except:
+		except Exception:
 			# When configuring for the first time, required keys are created in the normal profile
 			config.conf.profiles[0]['updateChannel'] = {'channel': self.channels.Selection}
 		if self.channels.Selection == 0:
 			versionInfo.updateVersionType = originalChannel
 		else:
 			versionInfo.updateVersionType = channels[config.conf.profiles[0]['updateChannel']['channel']]
-		# This prevents an issue caused when updates were downloaded without installing and the channel was changed. Reset the state dictionary and save it
+		# This prevents an issue caused when updates were downloaded without installing and the channel was changed.
+		# Reset the state dictionary and save it
 		try:
 			updateCheck.state['lastCheck'] = 0
 			updateCheck.state['pendingUpdateAPIVersion'] = (0, 0, 0)
@@ -184,7 +197,7 @@ class UpdateChannelPanel(SettingsPanel):
 			updateCheck.state['pendingUpdateFile'] = None
 			updateCheck.state['pendingUpdateVersion'] = None
 			updateCheck.saveState()
-		except:  # updateCheck module was not imported
+		except Exception:  # updateCheck module was not imported
 			pass
 		self.status = 1
 		self.event.set()
@@ -203,6 +216,7 @@ class UpdateChannelPanel(SettingsPanel):
 		config.conf.profiles[-1].name = self.originalProfileName
 		self.Hide()
 
+
 class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	def __init__(self):
 		super(GlobalPlugin, self).__init__()
@@ -213,7 +227,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		try:
 			# Use normal profile only if possible
 			index = int(config.conf.profiles[0]['updateChannel']['channel'])
-		except:
+		except Exception:
 			# When using for the first time, read from general configuration
 			index = config.conf['updateChannel']['channel']
 		if index > len(channels):
@@ -228,5 +242,5 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			NVDASettingsDialog.categoryClasses.remove(UpdateChannelPanel)
 			versionInfo.updateVersionType = originalChannel
 			originalChannel = None
-		except:
+		except Exception:
 			pass
