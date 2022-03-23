@@ -55,16 +55,21 @@ class UpdateChannelPanel(SettingsPanel):
 			self.channels.Selection = config.conf['updateChannel']['channel']
 		# If updateCheck was not imported correctly next part is skipped.
 		if updateCheck:
-			# Add an edit box where information about the selected channel (such as the version to be downloaded) is displayed.
+			# Add an edit box where information about the selected channel
+			# (such as the version to be downloaded) is displayed.
 			self.channels.Bind(wx.EVT_CHOICE, self.onChoice)
-			self.channelInfo = helper.addItem(wx.TextCtrl(self, style=wx.TE_RICH | wx.TE_NO_VSCROLL | wx.TE_WORDWRAP | wx.TE_MULTILINE | wx.TE_READONLY, value="", size=(300, 20)))
+			self.channelInfo = helper.addItem(wx.TextCtrl(
+				self, style=wx.TE_RICH | wx.TE_NO_VSCROLL | wx.TE_WORDWRAP | wx.TE_MULTILINE | wx.TE_READONLY,
+				value="", size=(300, 20)))
 			self.channelInfo.Bind(wx.EVT_TEXT, self.onText)
 			self.channelInfo.Disable()
 			# Also, create hyperlinks to download and view changelog.
 			self.download = helper.addItem(wx.adv.HyperlinkCtrl(self, style=wx.adv.HL_CONTEXTMENU))
 			self.download.Hide()
-			# TRANSLATORS: label of the View changelog hyperlink in the add-on settings panel
-			self.changelog = helper.addItem(wx.adv.HyperlinkCtrl(self, style=wx.adv.HL_CONTEXTMENU, label=_("View changelog")))
+
+			self.changelog = helper.addItem(wx.adv.HyperlinkCtrl(
+				# TRANSLATORS: label of the View changelog hyperlink in the add-on settings panel
+				self, style=wx.adv.HL_CONTEXTMENU, label=_("View changelog")))
 			self.changelog.Hide()
 			self.availableUpdates = {}
 			self.status = 0
@@ -102,7 +107,9 @@ class UpdateChannelPanel(SettingsPanel):
 			pass
 		self.event.wait()
 		if self.status == 1:
-			versionInfo.updateVersionType = channels[config.conf.profiles[0]['updateChannel']['channel']] if config.conf.profiles[0]['updateChannel']['channel'] != 0 else originalChannel
+			versionInfo.updateVersionType = channels[config.conf.profiles[0]['updateChannel']['channel']]\
+			if config.conf.profiles[0]['updateChannel']['channel'] != 0\
+			else originalChannel
 		elif self.status == 2:
 			versionInfo.updateVersionType = currentChannel
 
