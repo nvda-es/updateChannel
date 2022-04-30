@@ -19,6 +19,7 @@ from threading import Thread, Event
 
 addonHandler.initTranslation()
 originalChannel = None
+originalVersion = None
 confspec = {
 	"channel": "integer(default=0)"
 }
@@ -89,11 +90,17 @@ class UpdateChannelPanel(SettingsPanel):
 				continue
 			try:
 				versionInfo.updateVersionType = channel
+				# Workaround for issue 3
+				if originalChannel == "snapshot:alpha" and originalChannel != channel:
+					versionInfo.version = str(versionInfo.version_year) + "." + str(versionInfo.version_major) + "."\
+					+ str(versionInfo.version_minor)
 				self.availableUpdates[channel] = updateCheck.checkForUpdate()
 				if not self.availableUpdates[channel]:
 					self.availableUpdates[channel] = 1  # Already updated
 			except Exception:
 				self.availableUpdates[channel] = -1  # An error occurred
+			if originalChannel == "snapshot:alpha" and originalChannel != channel:
+				versionInfo.version = originalVersion
 		versionInfo.updateVersionType = currentChannel
 		try:
 			# Don't wait for wx.EVT_CHOICE, update selected channel in self.channels now.
@@ -111,7 +118,9 @@ class UpdateChannelPanel(SettingsPanel):
 			if config.conf.profiles[0]['updateChannel']['channel'] != 0\
 			else originalChannel
 		elif self.status == 2:
-			versionInfo.updateVersionType = currentChannel
+			# Workaround for issue 3
+			if originalChannel == "snapshot:alpha" and originalChannel == currentChannel:
+				versionInfo.updateVersionType = currentChannel
 
 	def displayUpdateInfo(self, updateVersionInfo):
 		""" Select the appropriate message and put it in the edit box and updates de hyperlinks. """
@@ -194,6 +203,10 @@ class UpdateChannelPanel(SettingsPanel):
 			versionInfo.updateVersionType = originalChannel
 		else:
 			versionInfo.updateVersionType = channels[config.conf.profiles[0]['updateChannel']['channel']]
+		# Workaround for issue 3
+		if originalChannel == "snapshot:alpha" and self.channels.Selection >= 0 and self.channels.Selection < 3:
+			versionInfo.version = str(versionInfo.version_year) + "." + str(versionInfo.version_major) + "."\
+			+ str(versionInfo.version_minor)
 		# This prevents an issue caused when updates were downloaded without installing and the channel was changed.
 		# Reset the state dictionary and save it
 		try:
@@ -230,7 +243,9 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		if globalVars.appArgs.secure or config.isAppX or not updateCheck:  # Security checks
 			return
 		global originalChannel
+		global originalVersion
 		originalChannel = versionInfo.updateVersionType
+		originalVersion = versionInfo.version
 		try:
 			# Use normal profile only if possible
 			index = int(config.conf.profiles[0]['updateChannel']['channel'])
@@ -241,13 +256,20 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			index = 0
 		if index > 0:
 			versionInfo.updateVersionType = channels[index]
+		# Workaround for issue 3
+		if originalChannel == "snapshot:alpha" and index >= 0 and index < 3:
+			versionInfo.version = str(versionInfo.version_year) + "." + str(versionInfo.version_major) + "."\
+			+ str(versionInfo.version_minor)
 		NVDASettingsDialog.categoryClasses.append(UpdateChannelPanel)
 
 	def terminate(self):
 		global originalChannel
+		global originalVersion
 		try:
 			NVDASettingsDialog.categoryClasses.remove(UpdateChannelPanel)
 			versionInfo.updateVersionType = originalChannel
 			originalChannel = None
+			versionInfo.version = originalVersion
+			originalVersion = None
 		except Exception:
 			pass
