@@ -81,7 +81,7 @@ class UpdateChannelPanel(SettingsPanel):
 			self.thGetAvailableUpdates.start()
 			self.onChoice(None)
 
-	def getAvailableUpdates(self, currentChannel):
+	def getAvailableUpdates(self, currentChannel):  # noqa C901
 		""" Retrieves the information about the version to download for each update channel. """
 		for channel in channels:
 			if self.status > 0:
@@ -122,7 +122,7 @@ class UpdateChannelPanel(SettingsPanel):
 			if originalChannel == "snapshot:alpha" and originalChannel == currentChannel:
 				versionInfo.updateVersionType = currentChannel
 
-	def displayUpdateInfo(self, updateVersionInfo):
+	def displayUpdateInfo(self, updateVersionInfo):  # noqa C901
 		""" Select the appropriate message and put it in the edit box and updates de hyperlinks. """
 		showLinks = False
 		if channels[self.channels.Selection] == "default":
