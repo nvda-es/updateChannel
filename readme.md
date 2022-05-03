@@ -1,6 +1,6 @@
-# NVDA update channel selector
-
-## Introduction
+* Author: Jose Manuel Delicado
+* NVDA compatibility: 2021.3 and beyond
+* Download [stable version][1]
 
 This add-on allows you to download and install the latest NVDA version of the chosen type without visiting any webpage nor using your web browser. It is useful when, for example, you want to test new features in a NVDA snapshot and then return back to the most recent stable release. If you test regularly NVDA snapshots and you usually install them in your computer, you will save a lot of time with this add-on. If you prefer testing snapshots in portable mode keeping your installed copy of NVDA unchanged, this add-on is for you as well.
 
@@ -37,3 +37,7 @@ Information about available updates for each channel will be retrieved in the ba
 ### Version 1.0
 
 * Initial version.
+
+[[!tag dev stable]]
+
+[1]: https://addons.nvda-project.org/files/get.php?file=updchannelselect
