@@ -1,7 +1,7 @@
 # Update-Kanal #
 
 * Autor: José Manuel Delicado
-* NVDA-Kompatibilität: 2019.1 bis 2021.1
+* NVDA compatibility: 2021.3 and beyond
 * [Stabile Version herunterladen][1]
 
 Mit dieser Erweiterung können Sie die neueste NVDA-Version des ausgewählten
@@ -57,6 +57,14 @@ angezeigt:
   wird dieser Link nicht angezeigt.
 
 ## Änderungsprotokoll
+
+### Version 1.2
+
+* Aktualisierte Übersetzungen.
+* Compatible with NVDA 2022.1.
+* For security reasons, minimum NVDA version is set to 2021.3.
+* Workaround for a bug in the NV Access server which caused version 2019.2.1
+  to be offered when updating from alpha to stable.
 
 ### Version 1.1
 
