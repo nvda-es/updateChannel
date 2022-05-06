@@ -1,7 +1,7 @@
 # NVDAUpdate Channel Selector #
 
 * Autor: Jose Manuel Delicado
-* Compatibilidade co NVDA: da 2019.1 á 2021.1
+* NVDA compatibility: 2021.3 and beyond
 * Descargar [versión estable][1]
 
 Este complemento permíteche descargar e instalar a última versión de NVDA do
@@ -57,6 +57,14 @@ caixa de edición:
   algúns canais, esta ligazón non se amosará.
 
 ## Rexistro de trocos
+
+### Version 1.2
+
+* Traducións actualizadas.
+* Compatible with NVDA 2022.1.
+* For security reasons, minimum NVDA version is set to 2021.3.
+* Workaround for a bug in the NV Access server which caused version 2019.2.1
+  to be offered when updating from alpha to stable.
 
 ### Versión 1.1
 
