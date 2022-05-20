@@ -1,7 +1,7 @@
 # NVDA-päivityskanavan valitsin #
 
 * Tekijä: Jose Manuel Delicado
-* NVDA compatibility: 2021.3 and beyond
+* Yhteensopivuus: NVDA 2021.3 ja uudemmat
 * Lataa [vakaa versio][1]
 
 Tämän lisäosan avulla voit ladata ja asentaa valitsemaasi tyyppiä olevan
@@ -52,13 +52,13 @@ yksi tai kaksi linkkiä:
 
 ## Muutosloki
 
-### Version 1.2
+### Versio 1.2
 
 * Käännöksiä päivitetty.
-* Compatible with NVDA 2022.1.
-* For security reasons, minimum NVDA version is set to 2021.3.
-* Workaround for a bug in the NV Access server which caused version 2019.2.1
-  to be offered when updating from alpha to stable.
+* Yhteensopiva NVDA 2022.1:n kanssa.
+* Turvallisuussyistä NVDA:n vähimmäisversioksi on asetettu 2021.3.
+* Ratkaisu NV Accessin palvelimen virheeseen, joka aiheutti version 2019.2.1
+  tarjoamisen päivitettäessä alfasta vakaaseen.
 
 ### Versio 1.1
 
