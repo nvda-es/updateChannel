@@ -1,0 +1,105 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: NVDAUpdate Channel Selector\n"
+"POT-Creation-Date: 2022-05-20 09:29+0300\n"
+"PO-Revision-Date: 2022-05-20 09:41+0300\n"
+"Last-Translator: Volodymyr Pyrih <vp88.mobile@gmail.com>\n"
+"Language-Team: Volodymyr Pyrih (VovaMobile)\n"
+"Language: uk_UA\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+"X-Generator: Poedit 3.0.1\n"
+"X-Poedit-Basepath: ../../../..\n"
+"X-Poedit-SearchPath-0: addon/globalPlugins/updateChannel.py\n"
+"X-Poedit-SearchPath-1: buildVars.py\n"
+
+#. TRANSLATORS: default channel option in the combo box
+#: addon/globalPlugins/updateChannel.py:31
+msgid "Default"
+msgstr "Стандартний"
+
+#. TRANSLATORS: stable releases option in the combo box
+#: addon/globalPlugins/updateChannel.py:33
+msgid "Stable"
+msgstr "Стабільний"
+
+#. TRANSLATORS: stable, release candidate and beta releases option in the combo box
+#: addon/globalPlugins/updateChannel.py:35
+msgid "Stable, rc and beta"
+msgstr "Стабільні, реліз-кандидати і бета"
+
+#. TRANSLATORS: alpha snapshots option in the combo box
+#: addon/globalPlugins/updateChannel.py:37
+msgid "Alpha (snapshots)"
+msgstr "Альфа (снепшоти)"
+
+#. TRANSLATORS: disable updates option in the combo box
+#: addon/globalPlugins/updateChannel.py:39
+msgid "Disable updates (not recommended)"
+msgstr "Вимкнути оновлення (не рекомендовано)"
+
+#. TRANSLATORS: title for the Update Channel settings category
+#. TRANSLATORS: label for available update channels in a combo box
+#: addon/globalPlugins/updateChannel.py:45
+#: addon/globalPlugins/updateChannel.py:50
+msgid "Update channel"
+msgstr "Канал оновлення"
+
+#. TRANSLATORS: label of the View changelog hyperlink in the add-on settings panel
+#: addon/globalPlugins/updateChannel.py:73
+msgid "View changelog"
+msgstr "Переглянути журнал змін"
+
+#. TRANSLATORS: information displayed when there is a new version available for download
+#: addon/globalPlugins/updateChannel.py:138
+#, python-brace-format
+msgid "{channelInfo} (apiVersion {APIVersion})"
+msgstr "{channelInfo} (apiVersion {APIVersion})"
+
+#. TRANSLATORS: label of the download hyperlink located in the add-on settings panel
+#: addon/globalPlugins/updateChannel.py:141
+#, python-format
+msgid "Download now %s"
+msgstr "Завантажити зараз %s"
+
+#. TRANSLATORS: Message displayed when an error occurred and the channel update information
+#. could not be retrieved.
+#: addon/globalPlugins/updateChannel.py:157
+msgid "Fail retrieving update info"
+msgstr "Не вдалося отримати інформацію про оновлення"
+
+#. TRANSLATORS: Message displayed when there are no updates available on the selected channel.
+#: addon/globalPlugins/updateChannel.py:160
+msgid "Already updated"
+msgstr "Вже оновлено"
+
+#. TRANSLATORS: Message displayed when retrieval of update information has not yet been completed.
+#: addon/globalPlugins/updateChannel.py:164
+msgid "searching update info"
+msgstr "Пошук інформації про оновлення"
+
+#. TRANSLATORS: When disable updates has been selected, the current version information is displayed.
+#: addon/globalPlugins/updateChannel.py:169
+#, python-brace-format
+msgid "Current version: {version} build {version_build}"
+msgstr "Поточна версія: {version} збірка {version_build}"
+
+#: buildVars.py:18
+msgid "Update channel selector"
+msgstr "Вибір каналу оновлення"
+
+#: buildVars.py:21
+msgid ""
+"This add-on allows you to switch quickly between NVDA snapshots and release "
+"types. Go to the update channel category on the NVDA settings dialog, choose "
+"your update channel and check for updates from the NVDA help menu. Choose "
+"the stable option and update again to return to an official release."
+msgstr ""
+"Цей додаток дозволяє швидко перемикатися між снепшотами і типами релізів "
+"NVDA. Увійдіть у категорію «Вибір каналу оновлень NVDA» у налаштуваннях "
+"NVDA, оберіть бажаний канал оновлення і перевірте наявність оновлень у меню "
+"довідки NVDA. Оберіть стабільний канал і оновіть щераз, щоб повернутися до "
+"стабільного релізу."
