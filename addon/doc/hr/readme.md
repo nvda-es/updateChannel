@@ -1,4 +1,4 @@
-# Selektor kanala za aktualiziranje NVDA čitača (NVDAUpdate Channel Selector #
+# Selektor kanala za aktualiziranje NVDA čitača (NVDAUpdate Channel Selector) #
 
 * Autor: Jose Manuel Delicado
 * NVDA kompatibilnost: 2021.3 i novije verzije
