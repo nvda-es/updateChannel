@@ -1,7 +1,7 @@
 # NVDAUpdate Channel Selector #
 
 * Autor: Jose Manuel Delicado
-* NVDA compatibility: 2021.3 and beyond
+* Compatibilidade con NVDA: 2021.3 en diante
 * Descargar [versión estable][1]
 
 Este complemento permíteche descargar e instalar a última versión de NVDA do
@@ -25,7 +25,7 @@ actualización...". Polo de agora, estas son as canles dispoñibles:
 * Default (predeterminada): ésta é a canle por defecto utilizada pola túa
   versión de NVDA. Elixir esta opción é o mesmo que desactivar o
   complemento.
-* Stable (estable): forzar o canal de actualización a estable. Útil cando
+* Stable (estable): forzar o canle de actualización a estable. Útil cando
   queiras volver a unha versión estable dende unha versión de
   desenvolvemento.
 * Stable, rc and beta (estable, rc e beta): ésta é a canle das versións
@@ -42,13 +42,13 @@ actualización...". Polo de agora, estas son as canles dispoñibles:
   automáticas dende a categoría xeral das opcións. Utiliza esta opción só
   con fins de proba.
 
-Obterase información sobre as actualizacións dispoñibles para cada canal en
+Obterase información sobre as actualizacións dispoñibles para cada canle en
 segundo plano cando se abra o panel de opcións. Preme tab para navegar a
 unha caixa de edición de só lectura, onde poderás ver esta información. Esta
-información actualizarase dinamicamente cando cando cambies o canal de
-actualización no cadro combinado. Se hai unha actualización dispoñible para
-o canal seleccionado, aparecerán unha ou dúas ligazóns a continuación da
-caixa de edición: 
+información actualizarase dinamicamente cando cambies o canle de
+actualización na caixa combinada. Se hai unha actualización dispoñible para
+a canle seleccionada, aparecerán unha ou dúas ligazóns a continuación da
+caixa de edición:
 
 * Download (Descargar): preme a barra espaciadora nesta ligazón para abrilo
   no teu navegador web e descargar o último instalador.
@@ -58,13 +58,13 @@ caixa de edición:
 
 ## Rexistro de trocos
 
-### Version 1.2
+### Versión 1.2
 
 * Traducións actualizadas.
-* Compatible with NVDA 2022.1.
-* For security reasons, minimum NVDA version is set to 2021.3.
-* Workaround for a bug in the NV Access server which caused version 2019.2.1
-  to be offered when updating from alpha to stable.
+* Compatible con NVDA 2022.1.
+* Por razóns de seguridade, a versión mínima de NVDA establécese na 2021.3.
+* Parche para un erro no servidor de NV Access que causaba que se ofrecese a
+  versión 2019.2.1 ó actualizar dende alfa a estable.
 
 ### Versión 1.1
 
