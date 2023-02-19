@@ -1,4 +1,5 @@
 This release brings the following changes:
 
 * Updated translations.
-* Fixed a bug which prevented creating portable copies from alpha snapshots.
+* Compatible with NVDA 2023.1.
+* For security reasons, minimum NVDA version is set to 2022.4.
