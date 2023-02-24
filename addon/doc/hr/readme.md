@@ -1,7 +1,7 @@
 # Selektor kanala za aktualiziranje NVDA čitača (NVDAUpdate Channel Selector) #
 
 * Autor: Jose Manuel Delicado
-* NVDA kompatibilnost: 2021.3 i novije verzije
+* NVDA compatibility: 2022.4 and beyond
 * Preuzmi [stabilnu verziju][1]
 
 Ovaj dodatak omogućuje preuzimanje i instaliranje najnovije verzije NVDA
@@ -53,6 +53,17 @@ uređivanje:
   poveznica neće prikazati.
 
 ## Dnevnik promjena
+
+### Version 1.4
+
+* Aktualizirani prijevodi.
+* Compatible with NVDA 2023.1.
+* For security reasons, minimum NVDA version is set to 2022.4.
+
+### Version 1.3
+
+* Aktualizirani prijevodi.
+* Fixed a bug which prevented creating portable copies from alpha snapshots.
 
 ### Verzija 1.2
 

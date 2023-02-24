@@ -1,7 +1,7 @@
 # NVDAUpdate Channel Selector #
 
 * Autor: Jose Manuel Delicado
-* Compatibilidade con NVDA: 2021.3 en diante
+* NVDA compatibility: 2022.4 and beyond
 * Descargar [versión estable][1]
 
 Este complemento permíteche descargar e instalar a última versión de NVDA do
@@ -57,6 +57,17 @@ caixa de edición:
   algúns canais, esta ligazón non se amosará.
 
 ## Rexistro de trocos
+
+### Version 1.4
+
+* Traducións actualizadas.
+* Compatible with NVDA 2023.1.
+* For security reasons, minimum NVDA version is set to 2022.4.
+
+### Version 1.3
+
+* Traducións actualizadas.
+* Fixed a bug which prevented creating portable copies from alpha snapshots.
 
 ### Versión 1.2
 

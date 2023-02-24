@@ -1,7 +1,7 @@
 # Избор на канал за обновяване на NVDA (NVDA Update Channel Selector) #
 
 * Автор: Jose Manuel Delicado
-* Съвместимост с NVDA: от 2021.3 и по-нови версии
+* NVDA compatibility: 2022.4 and beyond
 * Изтегляне на [стабилна версия][1]
 
 Тази добавка ви позволява да изтеглите и инсталирате най-новата версия на
@@ -54,6 +54,17 @@ NVDA -> Настройки -> Опции -> категория "Канал за 
   някои канали тази връзка няма да е налична.
 
 ## Списък на промените
+
+### Version 1.4
+
+* Обновени преводи.
+* Compatible with NVDA 2023.1.
+* For security reasons, minimum NVDA version is set to 2022.4.
+
+### Version 1.3
+
+* Обновени преводи.
+* Fixed a bug which prevented creating portable copies from alpha snapshots.
 
 ### Версия 1.2
 

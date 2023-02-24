@@ -1,7 +1,7 @@
 # Sélecteur du canal de mise à jour de NVDA #
 
 * Auteur : Jose Manuel Delicado
-* NVDA compatibility: 2021.3 and beyond
+* NVDA compatibility: 2022.4 and beyond
 * Télécharger [version stable][1]
 
 Cette extension vous permet de télécharger et d'installer la dernière
@@ -58,6 +58,17 @@ ou deux liens apparaîtront à côté de la zone d'édition:
   certains canaux, ce lien ne sera pas affiché.
 
 ## Journal des changements
+
+### Version 1.4
+
+* Traductions mis à jour.
+* Compatible with NVDA 2023.1.
+* For security reasons, minimum NVDA version is set to 2022.4.
+
+### Version 1.3
+
+* Traductions mis à jour.
+* Fixed a bug which prevented creating portable copies from alpha snapshots.
 
 ### Version 1.2
 

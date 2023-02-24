@@ -1,7 +1,7 @@
 # NVDA Güncelleme Kanalı Seçici #
 
 * Yazar: Jose Manuel Delicado
-* NVDA uyumluluğu: 2021.3 ve üzeri sürümler
+* NVDA compatibility: 2022.4 and beyond
 * Kararlı sürümü [stable version][1] indir
 
 Bu eklenti, herhangi bir web sayfasını ziyaret etmeden veya web tarayıcınızı
@@ -55,6 +55,17 @@ iki bağlantı görünür:
   bağlantı görüntülenmez.
 
 ## Değişiklikler
+
+### Version 1.4
+
+* Çeviriler güncellendi.
+* Compatible with NVDA 2023.1.
+* For security reasons, minimum NVDA version is set to 2022.4.
+
+### Version 1.3
+
+* Çeviriler güncellendi.
+* Fixed a bug which prevented creating portable copies from alpha snapshots.
 
 ### Sürüm 1.2
 

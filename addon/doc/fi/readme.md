@@ -1,7 +1,7 @@
 # NVDA-päivityskanavan valitsin #
 
 * Tekijä: Jose Manuel Delicado
-* Yhteensopivuus: NVDA 2021.3 ja uudemmat
+* Yhteensopivuus: NVDA 2022.4 ja uudemmat
 * Lataa [vakaa versio][1]
 
 Tämän lisäosan avulla voit ladata ja asentaa valitsemaasi tyyppiä olevan
@@ -51,6 +51,18 @@ yksi tai kaksi linkkiä:
   tämän linkin kohdalla Väli-näppäintä. Tätä ei näytetä joissakin kanavissa.
 
 ## Muutosloki
+
+### Versio 1.4
+
+* Käännöksiä päivitetty.
+* Yhteensopiva NVDA 2023.1:n kanssa.
+* Turvallisuussyistä NVDA:n vähimmäisversioksi on määritetty 2022.4.
+
+### Versio 1.3
+
+* Käännöksiä päivitetty.
+* Korjattu bugi, joka esti massamuistiversioiden luomisen
+  alfa-kehitysversioista.
 
 ### Versio 1.2
 
