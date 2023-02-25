@@ -1,5 +1,5 @@
 * Author: Jose Manuel Delicado
-* NVDA compatibility: 2021.3 and beyond
+* NVDA compatibility: 2022.4 and beyond
 * Download [stable version][1]
 
 This add-on allows you to download and install the latest NVDA version of the chosen type without visiting any webpage nor using your web browser. It is useful when, for example, you want to test new features in a NVDA snapshot and then return back to the most recent stable release. If you test regularly NVDA snapshots and you usually install them in your computer, you will save a lot of time with this add-on. If you prefer testing snapshots in portable mode keeping your installed copy of NVDA unchanged, this add-on is for you as well.
@@ -20,6 +20,17 @@ Information about available updates for each channel will be retrieved in the ba
 * View changelog: press spacebar on this link to open the What's new document in your web browser. For some channels, this link won't be displayed.
 
 ## Changelog
+
+### Version 1.4
+
+* Updated translations.
+* Compatible with NVDA 2023.1.
+* For security reasons, minimum NVDA version is set to 2022.4.
+
+### Version 1.3
+
+* Updated translations.
+* Fixed a bug which prevented creating portable copies from alpha snapshots.
 
 ### Version 1.2
 
