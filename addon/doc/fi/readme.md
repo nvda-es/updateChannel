@@ -84,4 +84,4 @@ yksi tai kaksi linkkiä:
 
 [[!tag dev stable]]
 
-[1]: https://addons.nvda-project.org/files/get.php?file=updchannelselect
+[1]: https://addons.nvda-project.org/files/get.php?file=updateChannel
