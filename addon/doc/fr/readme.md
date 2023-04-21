@@ -91,4 +91,4 @@ ou deux liens apparaîtront à côté de la zone d'édition:
 
 [[!tag dev stable]]
 
-[1]: https://addons.nvda-project.org/files/get.php?file=updateChannel
+[1]: https://www.nvaccess.org/addonStore/legacy?file=updateChannel
