@@ -1,31 +1,31 @@
-# Update-Kanal #
+# Update-Kanal-Auswahl #
 
 * Autor: José Manuel Delicado
 * NVDA-Kompatibilität: 2022.4 und neuer
 * [Stabile Version herunterladen][1]
 
-Mit dieser Erweiterung können Sie die neueste NVDA-Version des ausgewählten
-Typs herunterladen und installieren, ohne eine Webseite besuchen oder Ihren
-Webbrowser verwenden zu müssen. Dies ist nützlich, wenn Sie beispielsweise
-neue Funktionen in einem NVDA-Snapshot testen und dann zur neuesten stabilen
-Version zurückkehren möchten. Wenn Sie regelmäßig NVDA-Snapshots testen und
-diese in der Regel auf Ihrem Computer installieren, sparen Sie mit dieser
-Erweiterung viel Zeit. Wenn Sie es vorziehen, Snapshots im portablen Modus
-zu testen und Ihre installierte Version von NVDA unverändert zu lassen, ist
-diese Erweiterung ebenfalls für Sie geeignet.
+Mit dieser NVDA-Erweiterung können Sie die neueste NVDA-Version des
+ausgewählten Typs herunterladen und installieren, ohne einen Web-Browser zu
+benutzen. Dies ist nützlich, wenn Sie beispielsweise neue Funktionen in
+einem NVDA-Snapshot testen und dann zur neuesten stabilen Version
+zurückkehren möchten. Wenn Sie regelmäßig NVDA-Snapshots testen und diese in
+der Regel auf Ihrem Computer installieren, sparen Sie mit dieser
+NVDA-Erweiterung viel Zeit. Wenn Sie es vorziehen, Snapshots als portable
+Version zu testen und die installierte NVDA-Version unverändert zu lassen,
+ist diese NVDA-Erweiterung ebenfalls für Sie geeignet.
 
-## Verwendungszweck
+## Verwendung
 
-Sie können den Kanal für die NVDA-Aktualisierungen ändern, indem Sie im
-NVDA-Menü, Optionen, Einstellungen, Kategorie "update-Kanal" gehen. Nachdem
-Sie den gewünschten Kanal ausgewählt und auf "OK" geklickt haben, warten Sie
-bis zur nächsten automatischen Update-Prüfung oder im NVDA-Menü, Hilfe und
-wählen Sie die Option "Nach Updates suchen" aus. Im Moment sind dies die
-verfügbaren Kanäle:
+Sie können den Kanal für die NVDA-Updates ändern, in dem Sie über das
+NVDA-Menü, Optionen, Einstellungen, Kategorie "Update-Kanal-Auswahl"
+gehen. Nach dem Sie den gewünschten Kanal ausgewählt und auf "OK" geklickt
+haben, warten Sie bis zur nächsten automatischen Update-Prüfung oder im
+NVDA-Menü, Hilfe und wählen Sie die Option "Nach Updates suchen" aus. Im
+Moment sind dies die verfügbaren Kanäle:
 
-* Standard: Dies ist der Standardkanal, der von Ihrer NVDA-Version verwendet
-  wird. Die Auswahl dieser Option bedeutet dasselbe wie das Deaktivieren der
-  Erweiterung.
+* Standard: Dies ist der Standardkanal, der von der aktuellen NVDA-Version
+  verwendet wird. Die Auswahl dieser Option bedeutet dasselbe wie das
+  Deaktivieren der NVDA-Erweiterung.
 * Stabil: Aktualisierungskanal auf stabil erzwingen. Nützlich, wenn Sie von
   einem Snapshot zu einer stabilen Version zurückkehren möchten.
 * Stable, RC und Beta: Dies ist der Kanal für Beta-Releases. Sie erhalten
@@ -33,8 +33,9 @@ verfügbaren Kanäle:
   können Sie über Betas und Release-Kandidaten aktualisieren, bis Sie die
   nächste stabile Version erreichen.
 * Alpha (Snapshots): Wählen Sie diese Option aus, um auf die neueste Alpha
-  zu aktualisieren. Alpha-Snapshots ermöglichen es Ihnen, neue Funktionen zu
-  testen, aber sie sind ziemlich instabil. Seien Sie bitte vorsichtig.
+  zu aktualisieren. Mit den Alpha-Snapshots können Sie neue Funktionen
+  ausprobieren, aber sie können noch ziemlich instabil sein; daher auf
+  eigene Gefahr.
 * Updates deaktivieren (nicht empfohlen): Diese Option deaktiviert den
   Update-Kanal. Wenn Sie nach Updates suchen, wird eine Fehlermeldung
   angezeigt. Denken Sie daran, dass Sie automatische Updates in den
@@ -45,16 +46,15 @@ Informationen zu verfügbaren Updates für jeden Kanal werden im Hintergrund
 abgerufen, sobald das Einstellungsfenster geöffnet wird. Drücken Sie die
 Tabulatortaste, um zu einem schreibgeschützten Bearbeitungsfeld zu
 navigieren, in dem Sie diese Informationen sehen können. Sie werden
-dynamisch aktualisiert, wenn Sie den Aktualisierungskanal über das
-Kombinationsfeld ändern. Wenn für den ausgewählten Kanal ein Update
-verfügbar ist, werden neben dem Bearbeitungsfeld ein oder zwei Links dazu
-angezeigt:
+dynamisch aktualisiert, wenn Sie den Update-Kanal über das Kombinationsfeld
+ändern. Ist für den ausgewählten Kanal ein Update verfügbar, werden neben
+dem Bearbeitungsfeld ein oder zwei Links dazu angezeigt:
 
-* Download: Drücken Sie die Leertaste auf diesem Link, um ihn im Web-Browser
-  zu öffnen und das neueste Setup herunterzuladen.
-* Änderungsprotokoll anzeigen: Drücken Sie die Leertaste auf diesem Link, um
-  das Dokument "Neuigkeiten" im Web-Browser zu öffnen. Bei einigen Kanälen
-  wird dieser Link nicht angezeigt.
+* Download: Betätigen Sie die Leertaste auf diesem Link, um die neueste
+  Setup-Datei im Web-Browser zu öffnen und sie herunterzuladen.
+* Änderungsprotokoll anzeigen: Betätigen Sie die Leertaste auf diesem Link,
+  um das Dokument im Web-Browser zu öffnen. Bei einigen Kanälen wird dieser
+  Link nicht angezeigt.
 
 ## Änderungsprotokoll
 
