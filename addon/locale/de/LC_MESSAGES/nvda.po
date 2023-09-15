@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: updateChannel 1.1\n"
 "Report-Msgid-Bugs-To: nvda-translations@groups.io\n"
 "POT-Creation-Date: 2021-11-17 12:20+0000\n"
-"PO-Revision-Date: 2023-08-03 14:35+0200\n"
+"PO-Revision-Date: 2023-09-09 00:31+0200\n"
 "Last-Translator: René Linke <rene.linke@hamburg.de>\n"
 "Language-Team: \n"
 "Language: de\n"
@@ -31,7 +31,7 @@ msgstr "Stabil, RC und Beta"
 
 #. TRANSLATORS: alpha snapshots option in the combo box
 msgid "Alpha (snapshots)"
-msgstr "Alpha (Schnappschuss)"
+msgstr "Alpha (Snapshot)"
 
 #. TRANSLATORS: disable updates option in the combo box
 msgid "Disable updates (not recommended)"
@@ -54,11 +54,11 @@ msgstr "{channelInfo} (API-Version {APIVersion})"
 #. TRANSLATORS: label of the download hyperlink located in the add-on settings panel
 #, python-format
 msgid "Download now %s"
-msgstr "Jetzt herunterladen %s"
+msgstr "Jetzt %s herunterladen"
 
 #. TRANSLATORS: Message displayed when an error occurred and the channel update information could not be retrieved.
 msgid "Fail retrieving update info"
-msgstr "Fehler beim Abrufen von Update-Informationen"
+msgstr "Abrufen von Update-Informationen fehlgeschlagen"
 
 #. TRANSLATORS: Message displayed when there are no updates available on the selected channel.
 msgid "Already updated"
@@ -90,5 +90,5 @@ msgstr ""
 "Release-Typen wechseln. Wählen Sie in den NVDA-Einstellungen die Kategorie "
 "\"Update-Kanal-Auswahl\" aus, wählen Sie dann den gewünschten Update-Kanal "
 "aus und suchen Sie im Hilfemenü von NVDA nach Updates. Wählen Sie die "
-"stabile Option aus und starten Sie die Aktualisierung erneut, um zu einer "
+"stabile Option aus und starten Sie das Update erneut, um zu einer "
 "offiziellen Version zurückzukehren."
