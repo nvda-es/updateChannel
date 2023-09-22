@@ -31,8 +31,8 @@ channelDescriptions = [
 	_("Default"),
 	# TRANSLATORS: stable releases option in the combo box
 	_("Stable"),
-	# TRANSLATORS: stable, release candidate and beta releases option in the combo box
-	_("Stable, rc and beta"),
+	# TRANSLATORS: release candidate and beta releases option in the combo box
+	_("Rc and beta"),
 	# TRANSLATORS: alpha snapshots option in the combo box
 	_("Alpha (snapshots)"),
 	# TRANSLATORS: disable updates option in the combo box
