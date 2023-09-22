@@ -26,8 +26,9 @@ msgstr "Oletus"
 msgid "Stable"
 msgstr "Vakaa"
 
-#. TRANSLATORS: stable, release candidate and beta releases option in the combo box
-msgid "Stable, rc and beta"
+#. TRANSLATORS: release candidate and beta releases option in the combo box
+#, fuzzy
+msgid "Rc and beta"
 msgstr "Vakaa, rc ja beeta"
 
 #. TRANSLATORS: alpha snapshots option in the combo box
@@ -57,7 +58,8 @@ msgstr "{channelInfo} (ohjelmointirajapinnan versio {APIVersion})"
 msgid "Download now %s"
 msgstr "Lataa nyt %s"
 
-#. TRANSLATORS: Message displayed when an error occurred and the channel update information could not be retrieved.
+#. TRANSLATORS: Message displayed when an error occurred and the channel update information
+#. could not be retrieved.
 msgid "Fail retrieving update info"
 msgstr "Päivitystietojen hakeminen epäonnistui"
 

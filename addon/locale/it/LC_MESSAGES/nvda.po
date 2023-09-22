@@ -25,8 +25,9 @@ msgstr "Default"
 msgid "Stable"
 msgstr "Stabile"
 
-#. TRANSLATORS: stable, release candidate and beta releases option in the combo box
-msgid "Stable, rc and beta"
+#. TRANSLATORS: release candidate and beta releases option in the combo box
+#, fuzzy
+msgid "Rc and beta"
 msgstr "Stabile, rc e beta"
 
 #. TRANSLATORS: alpha snapshots option in the combo box

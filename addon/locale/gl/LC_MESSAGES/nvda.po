@@ -9,12 +9,12 @@ msgstr ""
 "Report-Msgid-Bugs-To: nvda-translations@groups.io\n"
 "POT-Creation-Date: 2021-11-17 12:20+0000\n"
 "PO-Revision-Date: 2021-11-25 13:24+0100\n"
+"Last-Translator: Iván Novegil Cancelas <ivan.novegil.cancelas@gmail.com>\n"
+"Language-Team: \n"
 "Language: gl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Last-Translator: Iván Novegil Cancelas <ivan.novegil.cancelas@gmail.com>\n"
-"Language-Team: \n"
 "X-Generator: Poedit 3.0\n"
 
 #. TRANSLATORS: default channel option in the combo box
@@ -25,8 +25,9 @@ msgstr "Predeterminado"
 msgid "Stable"
 msgstr "Estable"
 
-#. TRANSLATORS: stable, release candidate and beta releases option in the combo box
-msgid "Stable, rc and beta"
+#. TRANSLATORS: release candidate and beta releases option in the combo box
+#, fuzzy
+msgid "Rc and beta"
 msgstr "Estable, rc e beta"
 
 #. TRANSLATORS: alpha snapshots option in the combo box
@@ -56,7 +57,8 @@ msgstr "{channelInfo} (apiVersion {APIVersion})"
 msgid "Download now %s"
 msgstr "Descargar agora %s"
 
-#. TRANSLATORS: Message displayed when an error occurred and the channel update information could not be retrieved.
+#. TRANSLATORS: Message displayed when an error occurred and the channel update information
+#. could not be retrieved.
 msgid "Fail retrieving update info"
 msgstr "Fallo obtendo información de actualización"
 

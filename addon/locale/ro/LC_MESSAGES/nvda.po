@@ -25,8 +25,9 @@ msgstr "Implicit"
 msgid "Stable"
 msgstr "Stabil"
 
-#. TRANSLATORS: stable, release candidate and beta releases option in the combo box
-msgid "Stable, rc and beta"
+#. TRANSLATORS: release candidate and beta releases option in the combo box
+#, fuzzy
+msgid "Rc and beta"
 msgstr "Stabil, RC și beta"
 
 #. TRANSLATORS: alpha snapshots option in the combo box
@@ -56,7 +57,8 @@ msgstr "{channelInfo} (apiVersion {APIVersion})"
 msgid "Download now %s"
 msgstr "Descărcați acum %s"
 
-#. TRANSLATORS: Message displayed when an error occurred and the channel update information could not be retrieved.
+#. TRANSLATORS: Message displayed when an error occurred and the channel update information
+#. could not be retrieved.
 msgid "Fail retrieving update info"
 msgstr "Eroare la recuperarea informațiilor despre actualizare"
 

@@ -26,8 +26,9 @@ msgstr "Varsayılan"
 msgid "Stable"
 msgstr "Kararlı"
 
-#. TRANSLATORS: stable, release candidate and beta releases option in the combo box
-msgid "Stable, rc and beta"
+#. TRANSLATORS: release candidate and beta releases option in the combo box
+#, fuzzy
+msgid "Rc and beta"
 msgstr "Kararlı, rc ve beta"
 
 #. TRANSLATORS: alpha snapshots option in the combo box
@@ -57,7 +58,8 @@ msgstr "{channelInfo} (apiVersion {APIVersion})"
 msgid "Download now %s"
 msgstr "Şimdi indir %s"
 
-#. TRANSLATORS: Message displayed when an error occurred and the channel update information could not be retrieved.
+#. TRANSLATORS: Message displayed when an error occurred and the channel update information
+#. could not be retrieved.
 msgid "Fail retrieving update info"
 msgstr "Güncelleme bilgisi alınamadı"
 
