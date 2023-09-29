@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: updateChannel 1.1\n"
+"Project-Id-Version: Güncelleme Kanalı Seçici\n"
 "Report-Msgid-Bugs-To: nvda-translations@groups.io\n"
 "POT-Creation-Date: 2021-11-17 12:20+0000\n"
-"PO-Revision-Date: 2023-05-20 18:48+0300\n"
+"PO-Revision-Date: 2023-09-24 15:05+0300\n"
 "Last-Translator: Umut KORKMAZ <umutkork@gmail.com>\n"
 "Language-Team: Umut KORKMAZ <umutkork@gmail.com>\n"
 "Language: tr_TR\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.3.1\n"
+"X-Generator: Poedit 3.3.2\n"
 
 #. TRANSLATORS: default channel option in the combo box
 msgid "Default"
@@ -27,9 +27,8 @@ msgid "Stable"
 msgstr "Kararlı"
 
 #. TRANSLATORS: release candidate and beta releases option in the combo box
-#, fuzzy
 msgid "Rc and beta"
-msgstr "Kararlı, rc ve beta"
+msgstr "RC ve beta"
 
 #. TRANSLATORS: alpha snapshots option in the combo box
 msgid "Alpha (snapshots)"
