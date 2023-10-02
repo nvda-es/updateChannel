@@ -1,3 +1,3 @@
-In this release, beta channel has been renamed to "Rc and beta". Previously it was labelled as "Stable, rc and beta". Also, last tested NVDA version has been changed to 2024.1.
+This release reverts last tested NVDA version to 2023.3.
 
 SHA256: 
