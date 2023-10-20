@@ -16,8 +16,9 @@
 
 * 默认：这是您的 NVDA 版本使用的默认更新通道。选择此选项意味着与禁用此插件相同。
 * 稳定版：这是稳定版的默认更新通道。当您想从测试快照返回到稳定版本时很有用。
-* 稳定、RC和Beta 版：这是 Beta 版的默认更新通道。一旦有 Beta 版发布，您将收到更新。此通道允许您从 Beta版 更新到 RC
-  版，直到您达到下一个稳定版。
+* Rc and beta: this is the channel for beta releases. You will receive the
+  first beta version once it is released. This channel allows you to update
+  through betas and release candidates.
 * Alpha（快照）：选择此选项可更新到最新的 Alpha。 Alpha 快照允许您测试新功能，但它们非常不稳定。请慎用。
 * 禁用更新（不推荐）：此选项禁用更新通道。如果检查更新，将显示错误消息。请注意，您可以从“常规设置”类别禁用自动更新。此选项仅用于测试目的。
 
