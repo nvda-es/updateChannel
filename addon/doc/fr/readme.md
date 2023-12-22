@@ -29,10 +29,9 @@ canaux disponibles :
 * Stable : Force le canal de mise à jour à Stable. Utile lorsque vous
   souhaitez revenir à une version stable à partir d'une version de
   développement.
-* Stable, rc et bêta : Ceci est le canal des versions bêta. Vous recevrez la
+* RC et bêta : Ceci est le canal des versions bêta. Vous recevrez la
   première version bêta une fois qu'elle sera publiée. Ce canal vous permet
-  de mettre à jour en passant  par bêta et release candidate jusqu'à ce que
-  vous atteigniez la prochaine version stable.
+  de mettre à jour en passant  par bêta et release candidate.
 * Alpha (versions de développement) : Choisissez cette option pour mettre à
   jour à l'alpha plus récente. Les versions de développement alpha vous
   permettent d'essayer de nouvelles fonctionnalités, mais elles sont assez

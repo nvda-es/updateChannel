@@ -27,9 +27,9 @@ seçeneğini seçin. Şimdilik, mevcut kanallar şunlardır:
   anlama gelir.
 * Kararlı: güncelleme kanalını kararlı olmaya zorla. Anlık görüntüden
   kararlı bir sürüme dönmek istediğinizde kullanışlıdır.
-* Kararlı, rc ve beta: Bu beta sürümleri için kanaldır. Yayınlandıktan sonra
-  İlk beta sürümünü alacaksınız. Bu kanal, bir sonraki kararlı sürüme
-  ulaşana kadar beta ve rc sürümlere güncelleme yapmanıza olanak tanır.
+* Rc ve beta: Burası beta sürümlerinin kanalıdır. İlk beta sürümünü
+  yayınlandıktan sonra alacaksınız. Bu kanal, betalar aracılığıyla
+  güncelleme yapmanıza ve adayları yayınlamanıza olanak tanır.
 * Alfa (anlık görüntüler): en son alfaya güncellemek için bu seçeneği
   seçin. Alfa anlık görüntüleri yeni özellikleri test etmenizi sağlar ancak
   oldukça kararsızdır. Lütfen dikkatli olun.

@@ -1,7 +1,7 @@
 # NVDAUpdate Channel Selector #
 
 * Autor: Jose Manuel Delicado
-* NVDA compatibility: 2022.4 and beyond
+* Compatibilidade con NVDA: 2022.4 en diante
 * Descargar [versión estable][1]
 
 Este complemento permíteche descargar e instalar a última versión de NVDA do
@@ -28,10 +28,9 @@ actualización...". Polo de agora, estas son as canles dispoñibles:
 * Stable (estable): forzar o canle de actualización a estable. Útil cando
   queiras volver a unha versión estable dende unha versión de
   desenvolvemento.
-* Stable, rc and beta (estable, rc e beta): ésta é a canle das versións
-  beta. Recibirás a primeira versión beta unha vez se publique. Esta canle
-  permíteche actualizar ás betas e candidatas a publicación ata chegar á
-  próxima versión estable.
+* Rc e beta: ésta é a canle das versións beta. Recibirás a primeira versión
+  beta unha vez se publique. Esta canle permíteche actualizar ás betas e
+  candidatas a publicación.
 * Alpha (alfa, versións de desenvolvemento): escolle esta opción para
   actualizar á última alfa. As versións de desenvolvemento alfa permítenche
   probar novas características, pero son algo inestables. Por favor, sé
@@ -58,13 +57,13 @@ caixa de edición:
 
 ## Rexistro de trocos
 
-### Version 1.4
+### Versión 1.4
 
 * Traducións actualizadas.
-* Compatible with NVDA 2023.1.
-* For security reasons, minimum NVDA version is set to 2022.4.
+* Compatible con NVDA 202231.
+* Por razóns de seguridade, a versión mínima de NVDA establécese na 2022.4.
 
-### Version 1.3
+### Versión 1.3
 
 * Traducións actualizadas.
 * Fixed a bug which prevented creating portable copies from alpha snapshots.

@@ -26,9 +26,9 @@ kanavat:
   valitseminen  tarkoittaa samaa kuin tämän lisäosan käytöstä poistaminen.
 * Vakaa: pakota päivityskanavaksi vakaa. Hyödyllistä, kun haluat palata
   kehitysversiosta vakaaseen versioon.
-* Vakaa, rc ja beeta: tämä on beetaversioiden kanava. Saat ensimmäisen
-  beetaversion heti, kun se julkaistaan. Tämän kanavan avulla voit päivittää
-  beetaversioista RC-versioihinn ja aina seuraavaan vakaaseen versioon asti.
+* RC ja beeta: tämä on beetaversioiden kanava. Saat ensimmäisen beetaversion
+  heti, kun se on julkaistu. Tämä kanava mahdollistaa päivittämisen beeta-
+  ja RC-versioista.
 * Alfa (kehitysversiot): päivitä viimeisimpään alfaversioon valitsemalla
   tämä vaihtoehto. Alfa-kehitysversiot mahdollistavat uusien ominaisuuksien
   testaamisen, mutta ne saattavat olla melko epävakaita. Ole varovainen.

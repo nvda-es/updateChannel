@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: updateChannel 1.1\n"
 "Report-Msgid-Bugs-To: nvda-translations@groups.io\n"
 "POT-Creation-Date: 2021-11-17 12:20+0000\n"
-"PO-Revision-Date: 2022-04-24 14:57+0200\n"
+"PO-Revision-Date: 2023-10-09 15:34+0200\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: \n"
 "Language: hr\n"
@@ -26,9 +26,8 @@ msgid "Stable"
 msgstr "Stabilno"
 
 #. TRANSLATORS: release candidate and beta releases option in the combo box
-#, fuzzy
 msgid "Rc and beta"
-msgstr "Stabilno izdanje, kandidat izdanja i beta izdanje"
+msgstr "Kandidat izdanja i beta izdanje"
 
 #. TRANSLATORS: alpha snapshots option in the combo box
 msgid "Alpha (snapshots)"

@@ -25,10 +25,9 @@ ažuriranja”. Za sada su ovo dostupni kanali:
   verzija. Biranje ove opcije znači isto kao i deaktiviranje dodatka.
 * Stabilno: prisili kanal aktuliziranja na stabilnu verziju. Korisno kad se
   iz međuizdanja želiš vratiti na stabilnu verziju.
-* Stabilno, kandidat izdanja i beta izdanje: ovo je kanal za beta
-  izdanja. Dobit ćeš prvu beta verziju kad se objavi. Ovaj kanal omogućuje
-  aktualiziranje putem beta izdanja i kandidata izdanja sve do sljedeće
-  stabilne verzije.
+* Rc and beta: this is the channel for beta releases. You will receive the
+  first beta version once it is released. This channel allows you to update
+  through betas and release candidates.
 * Alfa (međuizdanja): odaberi ovu opciju za aktualiziranje na najnoviju alfa
   verziju. Alfa međuizdanja omogućuju testiranje novih funkcija, ali su
   prilično nestabilne verzije, stoga ih koristi s oprezom.

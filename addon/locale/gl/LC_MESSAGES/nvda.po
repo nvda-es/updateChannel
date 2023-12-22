@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: updateChannel 1.1\n"
 "Report-Msgid-Bugs-To: nvda-translations@groups.io\n"
 "POT-Creation-Date: 2021-11-17 12:20+0000\n"
-"PO-Revision-Date: 2021-11-25 13:24+0100\n"
-"Last-Translator: Iván Novegil Cancelas <ivan.novegil.cancelas@gmail.com>\n"
+"PO-Revision-Date: 2023-10-06 23:48+0200\n"
+"Last-Translator: Juan C. Buño <oprisniki@gmail.com>\n"
 "Language-Team: \n"
 "Language: gl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.0\n"
+"X-Generator: Poedit 3.4\n"
 
 #. TRANSLATORS: default channel option in the combo box
 msgid "Default"
@@ -26,9 +26,8 @@ msgid "Stable"
 msgstr "Estable"
 
 #. TRANSLATORS: release candidate and beta releases option in the combo box
-#, fuzzy
 msgid "Rc and beta"
-msgstr "Estable, rc e beta"
+msgstr "Rc e beta"
 
 #. TRANSLATORS: alpha snapshots option in the combo box
 msgid "Alpha (snapshots)"

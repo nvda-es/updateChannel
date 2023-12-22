@@ -26,10 +26,9 @@ actualizaciones". Por ahora, estos son los canales disponibles:
   NVDA. Elegir esta opción es equivalente a deshabilitar el complemento.
 * Estable: forzar canal de actualización a estable. Útil cuando quieres
   volver a una versión estable desde una versión de desarrollo.
-* Estable, rc y beta: este es el canal de las versiones beta. Recibirás la
-  primera versión beta una vez esta sea liberada. Este canal te permite
-  actualizar pasando por betas y candidatas a liberación hasta que alcances
-  la próxima versión estable.
+* Rc y beta: este es el canal de las versiones beta. Recibirás la primera
+  versión beta una vez esta sea liberada. Este canal te permite actualizar
+  pasando por betas y candidatas a liberación.
 * Alfa (versiones de desarrollo): elige esta opción para actualizar a la
   alfa más reciente. Las versiones de desarrollo alfa te permiten probar
   nuevas funciones, pero son bastante inestables. Por favor, ten cuidado.
