@@ -188,7 +188,7 @@ class UpdateChannelPanel(SettingsPanel):
 					# TRANSLATORS: Message displayed when there are no updates available on the selected channel.
 					channelInfo = _("Already updated")
 		else:
-			if self.thGetAvailableUpdates.isAlive():
+			if self.thGetAvailableUpdates.is_alive():
 				# TRANSLATORS: Message displayed when retrieval of update information has not yet been completed.
 				channelInfo = _("searching update info")
 			else:
