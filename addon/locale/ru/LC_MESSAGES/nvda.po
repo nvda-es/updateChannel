@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: 'updateChannel' '1.2'\n"
 "Report-Msgid-Bugs-To: 'nvda-translations@groups.io'\n"
 "POT-Creation-Date: 2022-05-21 12:32+0400\n"
-"PO-Revision-Date: 2022-05-21 15:55+0400\n"
+"PO-Revision-Date: 2024-05-03 13:49+0500\n"
 "Last-Translator: Dragan Ratkovich\n"
 "Language-Team: \n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
-"X-Generator: Poedit 3.0.1\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+"X-Generator: Poedit 3.4.2\n"
 
 #. TRANSLATORS: default channel option in the combo box
 msgid "Default"
@@ -28,9 +28,8 @@ msgid "Stable"
 msgstr "Стабильный"
 
 #. TRANSLATORS: release candidate and beta releases option in the combo box
-#, fuzzy
 msgid "Rc and beta"
-msgstr "Стабильный, релиз-кандидат и бета-версия"
+msgstr "Релиз-кандидат и бета-версия"
 
 #. TRANSLATORS: alpha snapshots option in the combo box
 msgid "Alpha (snapshots)"
