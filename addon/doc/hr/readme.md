@@ -1,7 +1,7 @@
 # Selektor kanala za aktualiziranje NVDA čitača (NVDAUpdate Channel Selector) #
 
 * Autor: Jose Manuel Delicado
-* NVDA compatibility: 2022.4 and beyond
+* NVDA kompatibilnost: 2022.4 i novije verzije
 * Preuzmi [stabilnu verziju][1]
 
 Ovaj dodatak omogućuje preuzimanje i instaliranje najnovije verzije NVDA
@@ -25,9 +25,9 @@ ažuriranja”. Za sada su ovo dostupni kanali:
   verzija. Biranje ove opcije znači isto kao i deaktiviranje dodatka.
 * Stabilno: prisili kanal aktuliziranja na stabilnu verziju. Korisno kad se
   iz međuizdanja želiš vratiti na stabilnu verziju.
-* Rc and beta: this is the channel for beta releases. You will receive the
-  first beta version once it is released. This channel allows you to update
-  through betas and release candidates.
+* Kandidat izdanja i beta izdanje: ovo je kanal za beta izdanja. Dobit ćeš
+  prvu beta verziju kad se objavi. Ovaj kanal omogućuje aktualiziranje putem
+  beta izdanja i kandidata izdanja.
 * Alfa (međuizdanja): odaberi ovu opciju za aktualiziranje na najnoviju alfa
   verziju. Alfa međuizdanja omogućuju testiranje novih funkcija, ali su
   prilično nestabilne verzije, stoga ih koristi s oprezom.
@@ -53,13 +53,13 @@ uređivanje:
 
 ## Dnevnik promjena
 
-### Version 1.4
+### Verzija 1.4
 
 * Aktualizirani prijevodi.
-* Compatible with NVDA 2023.1.
-* For security reasons, minimum NVDA version is set to 2022.4.
+* Kompatibilno s NVDA čitačem 2023.1.
+* Iz sigurnosnih razloga, minimalna NVDA verzija postavljena je na 2022.4.
 
-### Version 1.3
+### Verzija 1.3
 
 * Aktualizirani prijevodi.
 * Fixed a bug which prevented creating portable copies from alpha snapshots.
