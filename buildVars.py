@@ -20,7 +20,7 @@ addon_info = {
 	# Translators: Long description to be shown for this add-on on add-on information from add-ons manager
 	"addon_description" : _("""This add-on allows you to switch quickly between NVDA snapshots and release types. Go to the update channel category on the NVDA settings dialog, choose your update channel and check for updates from the NVDA help menu. Choose the stable option and update again to return to an official release."""),
 	# version
-	"addon_version" : "1.6",
+	"addon_version" : "1.7",
 	# Author(s)
 	"addon_author" : "Jose Manuel Delicado <jm.delicado@nvda.es>, Javi Dominguez <fjavids@gmail.com>",
 	# URL for the add-on documentation support
@@ -28,7 +28,7 @@ addon_info = {
 	# Documentation file name
 	"addon_docFileName" : "readme.html",
 	# Minimum NVDA version supported (e.g. "2018.3.0")
-	"addon_minimumNVDAVersion" : "2022.4.0",
+	"addon_minimumNVDAVersion" : "2023.3.4",
 	# Last NVDA version supported/tested (e.g. "2018.4.0", ideally more recent than minimum version)
 	"addon_lastTestedNVDAVersion" : "2024.1.0",
 	# Add-on update channel (default is stable or None)
