@@ -1,7 +1,7 @@
 # Selector del canal de actualización de NVDA #
 
 * Autor: José Manuel Delicado
-* Compatibilidad con NVDA: de 2022.4 en adelante
+* Compatibilidad con NVDA: de 2023.3.4 en adelante
 * Descargar [versión estable][1]
 
 Este complemento te permite descargar e instalar la versión más reciente de

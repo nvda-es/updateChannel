@@ -1,7 +1,7 @@
 # NVDAUpdate Channel Selector (Вибір каналу оновлення NVDA) #
 
 * Автор: Jose Manuel Delicado
-* Сумісність з NVDA: 2022.4 і новіші
+* NVDA compatibility: 2023.3.4 and beyond
 * Завантажити [стабільну версію][1]
 
 Цей додаток дозволяє завантажувати і встановлювати найновішу версію NVDA

@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: updateChannel 1.1\n"
 "Report-Msgid-Bugs-To: nvda-translations@groups.io\n"
 "POT-Creation-Date: 2021-11-17 12:20+0000\n"
-"PO-Revision-Date: 2023-09-23 20:06+0800\n"
+"PO-Revision-Date: 2024-05-18 23:17+0800\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.4.4\n"
 
 #. TRANSLATORS: default channel option in the combo box
 msgid "Default"
@@ -27,7 +27,7 @@ msgstr "稳定版"
 
 #. TRANSLATORS: release candidate and beta releases option in the combo box
 msgid "Rc and beta"
-msgstr "Rc 版和 Beta版"
+msgstr "Rc（候选版）和 Beta（测试版）"
 
 #. TRANSLATORS: alpha snapshots option in the combo box
 msgid "Alpha (snapshots)"
@@ -35,7 +35,7 @@ msgstr "Alpha 版（快照）"
 
 #. TRANSLATORS: disable updates option in the combo box
 msgid "Disable updates (not recommended)"
-msgstr "禁用更新（不建议）。"
+msgstr "禁用更新（不推荐）。"
 
 #. TRANSLATORS: title for the Update Channel settings category
 #. TRANSLATORS: label for available update channels in a combo box
@@ -72,7 +72,7 @@ msgstr "正在检索更新信息"
 #. TRANSLATORS: When disable updates has been selected, the current version information is displayed.
 #, python-brace-format
 msgid "Current version: {version} build {version_build}"
-msgstr "当前版本: {version} 构建 {version_build}"
+msgstr "当前版本: {version} build {version_build}"
 
 #. Add-on summary, usually the user visible name of the addon.
 #. Translators: Summary for this add-on to be shown on installation and add-on information.
@@ -88,5 +88,5 @@ msgid ""
 "the stable option and update again to return to an official release."
 msgstr ""
 "这个插件可以让您在 NVDA 的各个版本之间进行快速切换。进入 NVDA 设置面板 / 更新"
-"通道类别下，选择一个所需的更新通道，然后在 NVDA 帮助菜单内“检查更新”。选择“稳"
-"定版”选项后，执行“检查更新”则可以回到稳定版。"
+"通道类别下，选择一个所需的更新通道，然后在 NVDA 帮助菜单内“检查更新”。比如选"
+"择“稳定版”选项，执行“检查更新”就可以回到稳定版。"

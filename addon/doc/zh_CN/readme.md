@@ -1,7 +1,7 @@
 # NVDA 更新通道选择器 #
 
 * 作者： Jose Manuel Delicado
-* NVDA 兼容性：2022.4 及更高版本
+* NVDA 兼容性：2023.3.4 及更高版本
 * 下载 [稳定版][1]
 
 此插件允许您下载并安装所选通道的最新 NVDA 版本，而无需访问任何网页或使用 Web 浏览器。例如，当您想要测试 NVDA
@@ -16,9 +16,7 @@
 
 * 默认：这是您的 NVDA 版本使用的默认更新通道。选择此选项意味着与禁用此插件相同。
 * 稳定版：这是稳定版的默认更新通道。当您想从测试快照返回到稳定版本时很有用。
-* Rc and beta: this is the channel for beta releases. You will receive the
-  first beta version once it is released. This channel allows you to update
-  through betas and release candidates.
+* Rc（候选版）和 Beta（测试版）： ，第一个公开测试版发布后，您就会收到更新。该渠道可以让您从 Beta 版更新到 RC 候选版。
 * Alpha（快照）：选择此选项可更新到最新的 Alpha。 Alpha 快照允许您测试新功能，但它们非常不稳定。请慎用。
 * 禁用更新（不推荐）：此选项禁用更新通道。如果检查更新，将显示错误消息。请注意，您可以从“常规设置”类别禁用自动更新。此选项仅用于测试目的。
 

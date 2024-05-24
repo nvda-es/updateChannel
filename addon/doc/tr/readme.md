@@ -1,7 +1,7 @@
 # NVDA Güncelleme Kanalı Seçici #
 
 * Yazar: Jose Manuel Delicado
-* NVDA uyumluluğu: 2022.4 ve sonrası
+* NVDA uyumluluğu: 2023.3.4 ve sonrası
 * Kararlı sürümü [stable version][1] indir
 
 Bu eklenti, herhangi bir web sayfasını ziyaret etmeden veya web tarayıcınızı

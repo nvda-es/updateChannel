@@ -1,7 +1,7 @@
 # Sélecteur du canal de mise à jour de NVDA #
 
 * Auteur : Jose Manuel Delicado
-* Compatibilité NVDA : 2022.4 et au-delà
+* Compatibilité NVDA : 2023.3.4 et au-delà
 * Télécharger [version stable][1]
 
 Cette extension vous permet de télécharger et d'installer la dernière

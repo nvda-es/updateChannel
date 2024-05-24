@@ -1,7 +1,7 @@
 # Update-Kanal-Auswahl #
 
 * Autor: José Manuel Delicado
-* NVDA-Kompatibilität: 2022.4 und neuer
+* NVDA compatibility: 2023.3.4 and beyond
 * [Stabile Version herunterladen][1]
 
 Mit dieser NVDA-Erweiterung können Sie die neueste NVDA-Version des
