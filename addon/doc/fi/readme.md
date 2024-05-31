@@ -74,7 +74,7 @@ yksi tai kaksi linkkiä:
 
 ### Versio 1.1
 
-* Ei-tuetut kanavat poistettu
+* Ei-tuetut kanavat poistettu.
 * Käännöksiä päivitetty.
 * Asetuspaneeliin lisätty tieto saatavilla olevista päivityksistä.
 
