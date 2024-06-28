@@ -1,7 +1,7 @@
 # Update-Kanal-Auswahl #
 
 * Autor: José Manuel Delicado
-* NVDA compatibility: 2023.3.4 and beyond
+* NVDA-Kompatibilität: 2023.3.4 und neuer
 * [Stabile Version herunterladen][1]
 
 Mit dieser NVDA-Erweiterung können Sie die neueste NVDA-Version des
@@ -28,9 +28,9 @@ Moment sind dies die verfügbaren Kanäle:
   Deaktivieren der NVDA-Erweiterung.
 * Stabil: Aktualisierungskanal auf stabil erzwingen. Nützlich, wenn Sie von
   einem Snapshot zu einer stabilen Version zurückkehren möchten.
-* Rc and beta: this is the channel for beta releases. You will receive the
-  first beta version once it is released. This channel allows you to update
-  through betas and release candidates.
+* RC und Beta: Dies ist der Kanal für Beta-Versionen. Sie erhalten die erste
+  Beta-Version, sobald sie veröffentlicht wird. Über diesen Kanal können Sie
+  Updates durch Beta- und RC-Versionen installieren.
 * Alpha (Snapshots): Wählen Sie diese Option aus, um auf die neueste Alpha
   zu aktualisieren. Mit den Alpha-Snapshots können Sie neue Funktionen
   ausprobieren, aber sie können noch ziemlich instabil sein; daher auf
