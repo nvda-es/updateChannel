@@ -1,0 +1,97 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2025 NVDA Contributors.
+# This file is distributed under the same license as the updateChannel package.
+# Josevan Barbosa Fernandes <josevanfernandes@yahoo.com.br>, 2025.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: updateChannel 1.1\n"
+"Report-Msgid-Bugs-To: nvda-translations@groups.io\n"
+"POT-Creation-Date: 2021-11-17 12:20+0000\n"
+"PO-Revision-Date: 2025-02-05 16:33-0300\n"
+"Last-Translator: Josevan Fernandes <josevanfernandes@yahoo.com.br>\n"
+"Language-Team: NVDA Brazilian Portuguese translation team (Equipe de "
+"tradução do NVDA para Português Brasileiro) <clever97@gmail.com>\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.5\n"
+
+#. TRANSLATORS: default channel option in the combo box
+msgid "Default"
+msgstr "Padrão"
+
+#. TRANSLATORS: stable releases option in the combo box
+msgid "Stable"
+msgstr "Estável"
+
+#. TRANSLATORS: release candidate and beta releases option in the combo box
+#, fuzzy
+msgid "Rc and beta"
+msgstr "Estável, rc e beta"
+
+#. TRANSLATORS: alpha snapshots option in the combo box
+msgid "Alpha (snapshots)"
+msgstr "Alfa (instantâneos)"
+
+#. TRANSLATORS: disable updates option in the combo box
+msgid "Disable updates (not recommended)"
+msgstr "Desabilitar atualizações (não recomendado)"
+
+#. TRANSLATORS: title for the Update Channel settings category
+#. TRANSLATORS: label for available update channels in a combo box
+msgid "Update channel"
+msgstr "Canal de atualização"
+
+#. TRANSLATORS: label of the View changelog hyperlink in the add-on settings panel
+msgid "View changelog"
+msgstr "Exibir registro de alterações"
+
+#. TRANSLATORS: information displayed when there is a new version available for download
+#, python-brace-format
+msgid "{channelInfo} (apiVersion {APIVersion})"
+msgstr "{channelInfo} (apiVersion {APIVersion})"
+
+#. TRANSLATORS: label of the download hyperlink located in the add-on settings panel
+#, python-format
+msgid "Download now %s"
+msgstr "Faça o download agora %s"
+
+#. TRANSLATORS: Message displayed when an error occurred and the channel update information
+#. could not be retrieved.
+msgid "Fail retrieving update info"
+msgstr "Falha ao recuperar informações de atualização"
+
+#. TRANSLATORS: Message displayed when there are no updates available on the selected channel.
+msgid "Already updated"
+msgstr "Já atualizado"
+
+#. TRANSLATORS: Message displayed when retrieval of update information has not yet been completed.
+msgid "searching update info"
+msgstr "pesquisa de informações de atualização"
+
+#. TRANSLATORS: When disable updates has been selected, the current version information is displayed.
+#, python-brace-format
+msgid "Current version: {version} build {version_build}"
+msgstr "Versão atual: {version} construir {version_build}"
+
+#. Add-on summary, usually the user visible name of the addon.
+#. Translators: Summary for this add-on to be shown on installation and add-on information.
+msgid "Update channel selector"
+msgstr "Atualizar o seletor de canais"
+
+#. Add-on description
+#. Translators: Long description to be shown for this add-on on add-on information from add-ons manager
+msgid ""
+"This add-on allows you to switch quickly between NVDA snapshots and release "
+"types. Go to the update channel category on the NVDA settings dialog, choose "
+"your update channel and check for updates from the NVDA help menu. Choose "
+"the stable option and update again to return to an official release."
+msgstr ""
+"Esse complemento permite alternar rapidamente entre os instantâneos do NVDA "
+"e os tipos de versão. Vá para a categoria de canal de atualização na caixa "
+"de diálogo de configurações do NVDA, escolha o canal de atualização e "
+"verifique se há atualizações no menu de ajuda do NVDA. Escolha a opção "
+"estável e atualize novamente para retornar a uma versão oficial."
