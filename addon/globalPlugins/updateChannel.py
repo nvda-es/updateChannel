@@ -1,7 +1,7 @@
 # Update channel addon for NVDA
 # This file is covered by the GNU General Public License.
 # See the file COPYING.txt for more details.
-# Copyright (C) 2022 Jose Manuel Delicado <jm.delicado@nvda.es>
+# Copyright (C) 2026 Jose Manuel Delicado <jm.delicado@nvda.es>
 
 import globalPluginHandler
 import addonHandler
@@ -25,7 +25,7 @@ confspec = {
 }
 config.conf.spec['updateChannel'] = confspec
 
-channels = ['default', 'stable', 'beta', 'snapshot:alpha', None]
+channels = ['default', 'stable', 'beta', None]
 channelDescriptions = [
 	# TRANSLATORS: default channel option in the combo box
 	_("Default"),
@@ -33,8 +33,6 @@ channelDescriptions = [
 	_("Stable"),
 	# TRANSLATORS: release candidate and beta releases option in the combo box
 	_("Rc and beta"),
-	# TRANSLATORS: alpha snapshots option in the combo box
-	_("Alpha (snapshots)"),
 	# TRANSLATORS: disable updates option in the combo box
 	_("Disable updates (not recommended)")
 ]
