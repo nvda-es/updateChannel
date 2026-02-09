@@ -1,11 +1,11 @@
 # Update channel addon for NVDA
 # This file is covered by the GNU General Public License.
 # See the file COPYING.txt for more details.
-# Copyright (C) 2022 Jose Manuel Delicado <jm.delicado@nvda.es>
+# Copyright (C) 2026 Jose Manuel Delicado <jm.delicado@nvda.es>
 
 import globalPluginHandler
 import addonHandler
-import versionInfo
+import buildVersion
 import config
 from gui import guiHelper, NVDASettingsDialog
 from gui.settingsDialogs import SettingsPanel
@@ -25,7 +25,7 @@ confspec = {
 }
 config.conf.spec['updateChannel'] = confspec
 
-channels = ['default', 'stable', 'beta', 'snapshot:alpha', None]
+channels = ['default', 'stable', 'beta', None]
 channelDescriptions = [
 	# TRANSLATORS: default channel option in the combo box
 	_("Default"),
@@ -33,18 +33,16 @@ channelDescriptions = [
 	_("Stable"),
 	# TRANSLATORS: release candidate and beta releases option in the combo box
 	_("Rc and beta"),
-	# TRANSLATORS: alpha snapshots option in the combo box
-	_("Alpha (snapshots)"),
 	# TRANSLATORS: disable updates option in the combo box
 	_("Disable updates (not recommended)")
 ]
 
 
 def getVersionStringFromBuildValues():
-	"""Creates a build string from the release year, mayor and minor versions.
+	"""Creates a build string from the release year, major and minor versions.
 	This string is used for version info to work around issue 3.
 	"""
-	return ".".join(map(str, (versionInfo.version_year, versionInfo.version_major, versionInfo.version_minor)))
+	return ".".join(map(str, (buildVersion.version_year, buildVersion.version_major, buildVersion.version_minor)))
 
 
 def getConfiguredChannel():
@@ -63,20 +61,20 @@ def checkForUpdateReplacement(auto=False):
 	# and for the duration of retrieving update info replace real NVDA's version with it.
 	# We cannot do this when initializing the plugin
 	# as this breaks the process of creating portable copies (see issue #5).
-	ORIG_NVDA_VERSION = versionInfo.version
+	ORIG_NVDA_VERSION = buildVersion.version
 	IS_ALPHA = originalChannel == "snapshot:alpha"
 	shouldReplaceVersion = False
-	if IS_ALPHA and versionInfo.updateVersionType != originalChannel:
+	if IS_ALPHA and buildVersion.updateVersionType != originalChannel:
 		shouldReplaceVersion = True
 	if shouldReplaceVersion is False and IS_ALPHA and getConfiguredChannel() in {1, 2}:
 		shouldReplaceVersion = True
 	if shouldReplaceVersion:
-		versionInfo.version = getVersionStringFromBuildValues()
+		buildVersion.version = getVersionStringFromBuildValues()
 	try:
 		return updateCheck.checkForUpdate_orig(auto)
 	finally:
 		if shouldReplaceVersion:
-			versionInfo.version = ORIG_NVDA_VERSION
+			buildVersion.version = ORIG_NVDA_VERSION
 
 
 class UpdateChannelPanel(SettingsPanel):
@@ -110,7 +108,7 @@ class UpdateChannelPanel(SettingsPanel):
 			self.status = 0
 			self.event = Event()
 			# It is done in a separate thread so as not to slow down the execution.
-			self.thGetAvailableUpdates = Thread(target=self.getAvailableUpdates, args=(versionInfo.updateVersionType,))
+			self.thGetAvailableUpdates = Thread(target=self.getAvailableUpdates, args=(buildVersion.updateVersionType,))
 			self.thGetAvailableUpdates.setDaemon(True)
 			self.thGetAvailableUpdates.start()
 			self.onChoice(None)
@@ -122,7 +120,7 @@ class UpdateChannelPanel(SettingsPanel):
 				break
 			if channel == "default" or not channel:
 				continue
-			versionInfo.updateVersionType = channel
+			buildVersion.updateVersionType = channel
 			try:
 				self.availableUpdates[channel] = updateCheck.checkForUpdate()
 			except RuntimeError:  # Thrown by `updateCheck.checkForUpdate`
@@ -130,7 +128,7 @@ class UpdateChannelPanel(SettingsPanel):
 			else:
 				if not self.availableUpdates[channel]:
 					self.availableUpdates[channel] = 1  # Already updated
-		versionInfo.updateVersionType = currentChannel
+		buildVersion.updateVersionType = currentChannel
 		try:
 			# Don't wait for wx.EVT_CHOICE, update selected channel in self.channels now.
 			if self.channels.Selection == 0:
@@ -143,13 +141,13 @@ class UpdateChannelPanel(SettingsPanel):
 			pass
 		self.event.wait()
 		if self.status == 1:
-			versionInfo.updateVersionType = channels[config.conf.profiles[0]['updateChannel']['channel']]\
+			buildVersion.updateVersionType = channels[config.conf.profiles[0]['updateChannel']['channel']]\
 			if config.conf.profiles[0]['updateChannel']['channel'] != 0\
 			else originalChannel
 		elif self.status == 2:
 			# Workaround for issue 3
 			if originalChannel == "snapshot:alpha" and originalChannel == currentChannel:
-				versionInfo.updateVersionType = currentChannel
+				buildVersion.updateVersionType = currentChannel
 
 	def displayUpdateInfo(self, updateVersionInfo):  # noqa C901
 		""" Select the appropriate message and put it in the edit box and updates de hyperlinks. """
@@ -196,7 +194,7 @@ class UpdateChannelPanel(SettingsPanel):
 		if channels[self.channels.Selection] is None:
 			# TRANSLATORS: When disable updates has been selected, the current version information is displayed.
 			channelInfo = _("Current version: {version} build {version_build}").format(
-				version=versionInfo.version, version_build=versionInfo.version_build)
+				version=buildVersion.version, version_build=buildVersion.version_build)
 		self.channelInfo.Value = channelInfo
 		if not showLinks:
 			if self.download.IsShown():
@@ -229,9 +227,9 @@ class UpdateChannelPanel(SettingsPanel):
 			# When configuring for the first time, required keys are created in the normal profile
 			config.conf.profiles[0]['updateChannel'] = {'channel': self.channels.Selection}
 		if self.channels.Selection == 0:
-			versionInfo.updateVersionType = originalChannel
+			buildVersion.updateVersionType = originalChannel
 		else:
-			versionInfo.updateVersionType = channels[config.conf.profiles[0]['updateChannel']['channel']]
+			buildVersion.updateVersionType = channels[config.conf.profiles[0]['updateChannel']['channel']]
 		# This prevents an issue caused when updates were downloaded without installing and the channel was changed.
 		# Reset the state dictionary and save it
 		try:
@@ -268,12 +266,12 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		if globalVars.appArgs.secure or config.isAppX or not updateCheck:  # Security checks
 			return
 		global originalChannel
-		originalChannel = versionInfo.updateVersionType
+		originalChannel = buildVersion.updateVersionType
 		index = getConfiguredChannel()
 		if index > len(channels):
 			index = 0
 		if index > 0:
-			versionInfo.updateVersionType = channels[index]
+			buildVersion.updateVersionType = channels[index]
 		NVDASettingsDialog.categoryClasses.append(UpdateChannelPanel)
 		if updateCheck is not None:
 			updateCheck.checkForUpdate_orig = updateCheck.checkForUpdate
@@ -291,7 +289,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 				pass
 		try:
 			NVDASettingsDialog.categoryClasses.remove(UpdateChannelPanel)
-			versionInfo.updateVersionType = originalChannel
+			buildVersion.updateVersionType = originalChannel
 			originalChannel = None
 		except Exception:
 			pass
