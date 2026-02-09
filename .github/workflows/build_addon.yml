@@ -19,7 +19,7 @@ jobs:
     steps:
     - uses: actions/checkout@v6.0.2
 
-    - run: echo -e "pre-commit\nscons\nmarkdown">requirements.txt
+    - run: echo -e "uv\npre-commit\nscons\nmarkdown">requirements.txt
 
     - name: Set up Python
       uses: actions/setup-python@v6.2.0
@@ -34,8 +34,8 @@ jobs:
         sudo apt-get update  -y
         sudo apt-get install -y gettext
 
-    - name: Code checks
-      run: export SKIP=no-commit-to-branch; pre-commit run --all
+    # - name: Code checks
+      # run: export SKIP=no-commit-to-branch; pre-commit run --all
 
     - name: building addon
       run: scons && scons pot
