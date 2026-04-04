@@ -10,14 +10,18 @@ import config
 from gui import guiHelper, NVDASettingsDialog
 from gui.settingsDialogs import SettingsPanel
 import wx
+import urllib.request
+import urllib.parse
 
 try:
 	import updateCheck
 except Exception:
 	updateCheck = None
+
 import globalVars
 import functools
 from threading import Thread, Event
+from logHandler import log
 
 addonHandler.initTranslation()
 originalChannel = None
@@ -26,7 +30,7 @@ confspec = {
 }
 config.conf.spec["updateChannel"] = confspec
 
-channels = ["default", "stable", "beta", None]
+channels = ["default", "stable", "beta", "snapshot:alpha", None]
 channelDescriptions = [
 	# TRANSLATORS: default channel option in the combo box
 	_("Default"),
@@ -34,10 +38,11 @@ channelDescriptions = [
 	_("Stable"),
 	# TRANSLATORS: release candidate and beta releases option in the combo box
 	_("Rc and beta"),
+	# TRANSLATORS: alpha snapshots option in the combo box
+	_("Alpha (snapshots)"),
 	# TRANSLATORS: disable updates option in the combo box
 	_("Disable updates (not recommended)"),
 ]
-
 
 def getVersionStringFromBuildValues():
 	"""Creates a build string from the release year, major and minor versions.
@@ -47,7 +52,6 @@ def getVersionStringFromBuildValues():
 		map(str, (buildVersion.version_year, buildVersion.version_major, buildVersion.version_minor)),
 	)
 
-
 def getConfiguredChannel():
 	try:
 		# Use normal profile only if possible
@@ -56,29 +60,24 @@ def getConfiguredChannel():
 		# When using for the first time, read from general configuration
 		return config.conf["updateChannel"]["channel"]
 
-
 def checkForUpdateReplacement(auto=False):
-	# As described in issue #3 when updating from Alpha to stable NV Access's server
-	# offers version 2019.2, rather than whatever is the stable release at the time.
-	# To work around this we create a version string composed of the release year, mayor and minor,
-	# and for the duration of retrieving update info replace real NVDA's version with it.
-	# We cannot do this when initializing the plugin
-	# as this breaks the process of creating portable copies (see issue #5).
-	ORIG_NVDA_VERSION = buildVersion.version
-	IS_ALPHA = originalChannel == "snapshot:alpha"
-	shouldReplaceVersion = False
-	if IS_ALPHA and buildVersion.updateVersionType != originalChannel:
-		shouldReplaceVersion = True
-	if shouldReplaceVersion is False and IS_ALPHA and getConfiguredChannel() in {1, 2}:
-		shouldReplaceVersion = True
-	if shouldReplaceVersion:
-		buildVersion.version = getVersionStringFromBuildValues()
+	channel = buildVersion.updateVersionType
+	if not channel or channel == "default":
+		channel = originalChannel
+	
 	try:
+		url = f"https://api.nvaccess.org/nvdaUpdateCheck?versionType={urllib.parse.quote(channel)}"
+		req = urllib.request.urlopen(url, timeout=30)
+		data = req.read().decode("utf-8")
+		if data:
+			result = updateCheck.UpdateInfo.parseUpdateCheckResponse(data)
+			if result.version == buildVersion.version:
+				return None
+			return result
+		else:
+			return None
+	except Exception:
 		return updateCheck.checkForUpdate_orig(auto)
-	finally:
-		if shouldReplaceVersion:
-			buildVersion.version = ORIG_NVDA_VERSION
-
 
 class UpdateChannelPanel(SettingsPanel):
 	# TRANSLATORS: title for the Update Channel settings category
@@ -89,11 +88,12 @@ class UpdateChannelPanel(SettingsPanel):
 		# TRANSLATORS: label for available update channels in a combo box
 		self.channels = helper.addLabeledControl(_("Update channel"), wx.Choice, choices=channelDescriptions)
 		self.channels.Selection = getConfiguredChannel()
+		
 		# If updateCheck was not imported correctly next part is skipped.
 		if updateCheck:
+			self.channels.Bind(wx.EVT_CHOICE, self.onChoice)
 			# Add an edit box where information about the selected channel
 			# (such as the version to be downloaded) is displayed.
-			self.channels.Bind(wx.EVT_CHOICE, self.onChoice)
 			self.channelInfo = helper.addItem(
 				wx.TextCtrl(
 					self,
@@ -104,10 +104,10 @@ class UpdateChannelPanel(SettingsPanel):
 			)
 			self.channelInfo.Bind(wx.EVT_TEXT, self.onText)
 			self.channelInfo.Disable()
+			
 			# Also, create hyperlinks to download and view changelog.
 			self.download = helper.addItem(wx.adv.HyperlinkCtrl(self, style=wx.adv.HL_CONTEXTMENU))
 			self.download.Hide()
-
 			self.changelog = helper.addItem(
 				wx.adv.HyperlinkCtrl(
 					# TRANSLATORS: label of the View changelog hyperlink in the add-on settings panel
@@ -117,6 +117,7 @@ class UpdateChannelPanel(SettingsPanel):
 				),
 			)
 			self.changelog.Hide()
+			
 			self.availableUpdates = {}
 			self.status = 0
 			self.event = Event()
@@ -125,75 +126,68 @@ class UpdateChannelPanel(SettingsPanel):
 				target=self.getAvailableUpdates,
 				args=(buildVersion.updateVersionType,),
 			)
-			self.thGetAvailableUpdates.setDaemon(True)
+			self.thGetAvailableUpdates.daemon = True
 			self.thGetAvailableUpdates.start()
 			self.onChoice(None)
 
-	def getAvailableUpdates(self, currentChannel):  # noqa C901
+	def getAvailableUpdates(self, currentChannel):
 		"""Retrieves the information about the version to download for each update channel."""
 		for channel in channels:
 			if self.status > 0:
 				break
 			if channel == "default" or not channel:
 				continue
-			buildVersion.updateVersionType = channel
+			
 			try:
-				self.availableUpdates[channel] = updateCheck.checkForUpdate()
-			except RuntimeError:  # Thrown by `updateCheck.checkForUpdate`
+				url = f"https://api.nvaccess.org/nvdaUpdateCheck?versionType={urllib.parse.quote(channel)}"
+				req = urllib.request.urlopen(url, timeout=30)
+				data = req.read().decode("utf-8")
+				if data:
+					result = updateCheck.UpdateInfo.parseUpdateCheckResponse(data)
+					if result.version == buildVersion.version:
+						result = None
+				else:
+					result = None
+				self.availableUpdates[channel] = result if result else 1  # 1 means already updated
+			except Exception:
 				self.availableUpdates[channel] = -1  # An error occurred
-			else:
-				if not self.availableUpdates[channel]:
-					self.availableUpdates[channel] = 1  # Already updated
-		buildVersion.updateVersionType = currentChannel
-		try:
-			# Don't wait for wx.EVT_CHOICE, update selected channel in self.channels now.
-			if self.channels.Selection == 0:
-				self.displayUpdateInfo(self.availableUpdates[originalChannel])
-			elif channels[self.channels.Selection] is None:
-				self.displayUpdateInfo(None)
-			else:
-				self.displayUpdateInfo(self.availableUpdates[channels[self.channels.Selection]])
-		except Exception:
-			pass
-		self.event.wait()
-		if self.status == 1:
-			buildVersion.updateVersionType = (
-				channels[config.conf.profiles[0]["updateChannel"]["channel"]]
-				if config.conf.profiles[0]["updateChannel"]["channel"] != 0
-				else originalChannel
-			)
-		elif self.status == 2:
-			# Workaround for issue 3
-			if originalChannel == "snapshot:alpha" and originalChannel == currentChannel:
-				buildVersion.updateVersionType = currentChannel
+		
+		# Thread-safe GUI update
+		wx.CallAfter(self.onChoice, None) 
+		self.event.wait(5) 
 
-	def displayUpdateInfo(self, updateVersionInfo):  # noqa C901
+	def displayUpdateInfo(self, updateVersionInfo):
 		"""Select the appropriate message and put it in the edit box and updates de hyperlinks."""
 		showLinks = False
+		channelInfoText = ""
+
 		if channels[self.channels.Selection] == "default":
 			try:
 				updateVersionInfo = self.availableUpdates[originalChannel]
 			except KeyError:
 				updateVersionInfo = None
-		if updateVersionInfo:
+				
+		if isinstance(updateVersionInfo, updateCheck.UpdateInfo):
 			try:
-				channelInfo = updateVersionInfo["version"]
-				if (
-					"apiVersion" in updateVersionInfo
-					and updateVersionInfo["version"] != updateVersionInfo["apiVersion"]
-				):
+				channelInfoText = updateVersionInfo.version
+				api_version = getattr(updateVersionInfo, 'apiVersion', None) or getattr(updateVersionInfo, 'api_version', None)
+				if api_version and channelInfoText != api_version:
 					# TRANSLATORS: information displayed when there is a new version available for download
-					channelInfo = _("{channelInfo} (apiVersion {APIVersion})").format(
-						channelInfo=channelInfo,
-						APIVersion=updateVersionInfo["apiVersion"],
+					channelInfoText = _("{channelInfo} (apiVersion {APIVersion})").format(
+						channelInfo=channelInfoText,
+						APIVersion=api_version,
 					)
+				
 				# TRANSLATORS: label of the download hyperlink located in the add-on settings panel
-				self.download.SetLabel(_("Download now %s") % updateVersionInfo["version"])
-				self.download.SetURL(updateVersionInfo["launcherUrl"])
+				self.download.SetLabel(_("Download now %s") % updateVersionInfo.version)
+				download_url = getattr(updateVersionInfo, 'launcherInteractiveUrl', None) or getattr(updateVersionInfo, 'launcherUrl', None) or getattr(updateVersionInfo, 'url', '')
+				self.download.SetURL(download_url)
 				if not self.download.IsShown():
 					self.download.Show()
-				if "changesUrl" in updateVersionInfo:
-					self.changelog.SetURL(updateVersionInfo["changesUrl"])
+				
+				changes_url = getattr(updateVersionInfo, 'changesUrl', None) or getattr(updateVersionInfo, 'changes_url', None)
+				if changes_url:
+					self.changelog.SetURL(changes_url)
 					if not self.changelog.IsShown():
 						self.changelog.Show()
 				else:
@@ -201,31 +195,35 @@ class UpdateChannelPanel(SettingsPanel):
 						self.changelog.Hide()
 				showLinks = True
 			except Exception:
-				if updateVersionInfo < 0:
-					# TRANSLATORS: Message displayed when an error occurred and the channel update information
-					# could not be retrieved.
-					channelInfo = _("Fail retrieving update info")
-				else:
-					# TRANSLATORS: Message displayed when there are no updates available on the selected channel.
-					channelInfo = _("Already updated")
+				channelInfoText = _("Error parsing update data.")
 		else:
-			if self.thGetAvailableUpdates.is_alive():
+			if isinstance(updateVersionInfo, int) and updateVersionInfo < 0:
+				# TRANSLATORS: Message displayed when an error occurred and the channel update information
+				# could not be retrieved.
+				channelInfoText = _("Fail retrieving update info")
+			elif updateVersionInfo == 1:
+				# TRANSLATORS: Message displayed when there are no updates available on the selected channel.
+				channelInfoText = _("Already updated")
+			elif self.thGetAvailableUpdates.is_alive():
 				# TRANSLATORS: Message displayed when retrieval of update information has not yet been completed.
-				channelInfo = _("searching update info")
-			else:
-				channelInfo = ""
-		if channels[self.channels.Selection] is None:
-			# TRANSLATORS: When disable updates has been selected, the current version information is displayed.
-			channelInfo = _("Current version: {version} build {version_build}").format(
-				version=buildVersion.version,
-				version_build=buildVersion.version_build,
-			)
-		self.channelInfo.Value = channelInfo
+				channelInfoText = _("searching update info")
+			elif channels[self.channels.Selection] is None:
+				# TRANSLATORS: When disable updates has been selected, the current version information is displayed.
+				channelInfoText = _("Current version: {version} build {version_build}").format(
+					version=buildVersion.version,
+					version_build=buildVersion.version_build,
+				)
+
+		self.channelInfo.Value = channelInfoText
+		self.channelInfo.Enable(bool(channelInfoText))
+		
 		if not showLinks:
 			if self.download.IsShown():
 				self.download.Hide()
 			if self.changelog.IsShown():
 				self.changelog.Hide()
+		
+		self.Layout()
 
 	def onChoice(self, evt):
 		"""Updates the channel information when the selection is changed."""
@@ -233,7 +231,7 @@ class UpdateChannelPanel(SettingsPanel):
 			updateVersionInfo = self.availableUpdates[channels[self.channels.Selection]]
 		except KeyError:
 			updateVersionInfo = None
-		self.displayUpdateInfo(updateVersionInfo)
+		wx.CallAfter(self.displayUpdateInfo, updateVersionInfo)
 
 	def onText(self, evt):
 		if self.channelInfo.GetValue():
@@ -251,10 +249,12 @@ class UpdateChannelPanel(SettingsPanel):
 		except Exception:
 			# When configuring for the first time, required keys are created in the normal profile
 			config.conf.profiles[0]["updateChannel"] = {"channel": self.channels.Selection}
+			
 		if self.channels.Selection == 0:
 			buildVersion.updateVersionType = originalChannel
 		else:
-			buildVersion.updateVersionType = channels[config.conf.profiles[0]["updateChannel"]["channel"]]
+			buildVersion.updateVersionType = channels[self.channels.Selection]
+
 		# This prevents an issue caused when updates were downloaded without installing and the channel was changed.
 		# Reset the state dictionary and save it
 		try:
@@ -267,6 +267,7 @@ class UpdateChannelPanel(SettingsPanel):
 			updateCheck.saveState()
 		except Exception:  # updateCheck module was not imported
 			pass
+			
 		self.status = 1
 		self.event.set()
 
@@ -284,38 +285,35 @@ class UpdateChannelPanel(SettingsPanel):
 		config.conf.profiles[-1].name = self.originalProfileName
 		self.Hide()
 
-
 class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	def __init__(self):
 		super(GlobalPlugin, self).__init__()
-		if globalVars.appArgs.secure or config.isAppX or not updateCheck:  # Security checks
+		if globalVars.appArgs.secure or getattr(config, 'isAppX', False) or not updateCheck:  # Security checks
 			return
+			
 		global originalChannel
 		originalChannel = buildVersion.updateVersionType
 		index = getConfiguredChannel()
-		if index > len(channels):
-			index = 0
-		if index > 0:
+		if index < len(channels) and index > 0:
 			buildVersion.updateVersionType = channels[index]
+			
 		NVDASettingsDialog.categoryClasses.append(UpdateChannelPanel)
-		if updateCheck is not None:
-			updateCheck.checkForUpdate_orig = updateCheck.checkForUpdate
-			updateCheck.checkForUpdate = functools.update_wrapper(
-				checkForUpdateReplacement,
-				updateCheck.checkForUpdate,
-			)
+		
+		updateCheck.checkForUpdate_orig = updateCheck.checkForUpdate
+		updateCheck.checkForUpdate = functools.update_wrapper(
+			checkForUpdateReplacement, updateCheck.checkForUpdate_orig
+		)
 
 	def terminate(self):
 		global originalChannel
-		if updateCheck is not None:
-			try:
-				updateCheck.checkForUpdate = updateCheck.checkForUpdate_orig
-				del updateCheck.checkForUpdate_orig
-			except AttributeError:
-				pass
-		try:
+		
+		if hasattr(updateCheck, 'checkForUpdate_orig'):
+			updateCheck.checkForUpdate = updateCheck.checkForUpdate_orig
+			delattr(updateCheck, 'checkForUpdate_orig')
+			
+		if UpdateChannelPanel in NVDASettingsDialog.categoryClasses:
 			NVDASettingsDialog.categoryClasses.remove(UpdateChannelPanel)
+			
+		if originalChannel:
 			buildVersion.updateVersionType = originalChannel
 			originalChannel = None
-		except Exception:
-			pass
