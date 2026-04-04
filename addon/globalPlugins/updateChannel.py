@@ -209,15 +209,15 @@ class UpdateChannelPanel(SettingsPanel):
 			elif updateVersionInfo == 1:
 				# TRANSLATORS: Message displayed when there are no updates available on the selected channel.
 				channelInfoText = _("Already updated")
-			elif self.thGetAvailableUpdates.is_alive():
-				# TRANSLATORS: Message displayed when retrieval of update information has not yet been completed.
-				channelInfoText = _("searching update info")
 			elif channels[self.channels.Selection] is None:
 				# TRANSLATORS: When disable updates has been selected, the current version information is displayed.
 				channelInfoText = _("Current version: {version} build {version_build}").format(
 					version=buildVersion.version,
 					version_build=buildVersion.version_build,
 				)
+			elif self.thGetAvailableUpdates.is_alive():
+				# TRANSLATORS: Message displayed when retrieval of update information has not yet been completed.
+				channelInfoText = _("searching update info")
 
 		self.channelInfo.Value = channelInfoText
 		self.channelInfo.Enable(bool(channelInfoText))
