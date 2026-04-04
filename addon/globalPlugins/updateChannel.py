@@ -21,7 +21,6 @@ except Exception:
 import globalVars
 import functools
 from threading import Thread, Event
-from logHandler import log
 
 addonHandler.initTranslation()
 originalChannel = None
@@ -62,13 +61,15 @@ def getConfiguredChannel():
 
 def checkForUpdateReplacement(auto=False):
 	channel = buildVersion.updateVersionType
-	if not channel or channel == "default":
+	if channel is None:
+		return updateCheck.checkForUpdate_orig(auto)
+	if channel == "default":
 		channel = originalChannel
 	
 	try:
 		url = f"https://api.nvaccess.org/nvdaUpdateCheck?versionType={urllib.parse.quote(channel)}"
-		req = urllib.request.urlopen(url, timeout=30)
-		data = req.read().decode("utf-8")
+		with urllib.request.urlopen(url, timeout=30) as req:
+			data = req.read().decode("utf-8")
 		if data:
 			result = updateCheck.UpdateInfo.parseUpdateCheckResponse(data)
 			if result.version == buildVersion.version:
@@ -87,7 +88,11 @@ class UpdateChannelPanel(SettingsPanel):
 		helper = guiHelper.BoxSizerHelper(self, sizer=sizer)
 		# TRANSLATORS: label for available update channels in a combo box
 		self.channels = helper.addLabeledControl(_("Update channel"), wx.Choice, choices=channelDescriptions)
-		self.channels.Selection = getConfiguredChannel()
+		configuredChannel = getConfiguredChannel()
+		channelCount = self.channels.GetCount()
+		if configuredChannel < 0 or configuredChannel >= channelCount:
+			configuredChannel = 0 if channelCount > 0 else wx.NOT_FOUND
+		self.channels.Selection = configuredChannel
 		
 		# If updateCheck was not imported correctly next part is skipped.
 		if updateCheck:
@@ -140,8 +145,8 @@ class UpdateChannelPanel(SettingsPanel):
 			
 			try:
 				url = f"https://api.nvaccess.org/nvdaUpdateCheck?versionType={urllib.parse.quote(channel)}"
-				req = urllib.request.urlopen(url, timeout=30)
-				data = req.read().decode("utf-8")
+				with urllib.request.urlopen(url, timeout=30) as req:
+					data = req.read().decode("utf-8")
 				if data:
 					result = updateCheck.UpdateInfo.parseUpdateCheckResponse(data)
 					if result.version == buildVersion.version:
@@ -294,8 +299,9 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		global originalChannel
 		originalChannel = buildVersion.updateVersionType
 		index = getConfiguredChannel()
-		if index < len(channels) and index > 0:
-			buildVersion.updateVersionType = channels[index]
+		if index < 0 or index >= len(channels):
+			index = 0
+		buildVersion.updateVersionType = channels[index]
 			
 		NVDASettingsDialog.categoryClasses.append(UpdateChannelPanel)
 		
