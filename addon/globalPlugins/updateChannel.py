@@ -6,6 +6,8 @@
 import globalPluginHandler
 import addonHandler
 import buildVersion
+import versionInfo
+import importlib
 import config
 from gui import guiHelper, NVDASettingsDialog
 from gui.settingsDialogs import SettingsPanel
@@ -69,15 +71,17 @@ def checkForUpdateReplacement(auto=False):
 	shouldReplaceVersion = False
 	if IS_ALPHA and buildVersion.updateVersionType != originalChannel:
 		shouldReplaceVersion = True
-	if shouldReplaceVersion is False and IS_ALPHA and getConfiguredChannel() in {1, 2}:
+	if not shouldReplaceVersion and IS_ALPHA and getConfiguredChannel() in {1, 2}:
 		shouldReplaceVersion = True
 	if shouldReplaceVersion:
 		buildVersion.version = getVersionStringFromBuildValues()
+		importlib.reload(versionInfo)
 	try:
 		return updateCheck.checkForUpdate_orig(auto)
 	finally:
 		if shouldReplaceVersion:
 			buildVersion.version = ORIG_NVDA_VERSION
+			importlib.reload(versionInfo)
 
 
 class UpdateChannelPanel(SettingsPanel):
@@ -125,7 +129,7 @@ class UpdateChannelPanel(SettingsPanel):
 				target=self.getAvailableUpdates,
 				args=(buildVersion.updateVersionType,),
 			)
-			self.thGetAvailableUpdates.setDaemon(True)
+			self.thGetAvailableUpdates.daemon = True
 			self.thGetAvailableUpdates.start()
 			self.onChoice(None)
 
@@ -137,6 +141,7 @@ class UpdateChannelPanel(SettingsPanel):
 			if channel == "default" or not channel:
 				continue
 			buildVersion.updateVersionType = channel
+			importlib.reload(versionInfo)
 			try:
 				self.availableUpdates[channel] = updateCheck.checkForUpdate()
 			except RuntimeError:  # Thrown by `updateCheck.checkForUpdate`
@@ -145,6 +150,7 @@ class UpdateChannelPanel(SettingsPanel):
 				if not self.availableUpdates[channel]:
 					self.availableUpdates[channel] = 1  # Already updated
 		buildVersion.updateVersionType = currentChannel
+		importlib.reload(versionInfo)
 		try:
 			# Don't wait for wx.EVT_CHOICE, update selected channel in self.channels now.
 			if self.channels.Selection == 0:
@@ -162,10 +168,12 @@ class UpdateChannelPanel(SettingsPanel):
 				if config.conf.profiles[0]["updateChannel"]["channel"] != 0
 				else originalChannel
 			)
+			importlib.reload(versionInfo)
 		elif self.status == 2:
 			# Workaround for issue 3
 			if originalChannel == "snapshot:alpha" and originalChannel == currentChannel:
 				buildVersion.updateVersionType = currentChannel
+				importlib.reload(versionInfo)
 
 	def displayUpdateInfo(self, updateVersionInfo):  # noqa C901
 		"""Select the appropriate message and put it in the edit box and updates de hyperlinks."""
@@ -255,6 +263,7 @@ class UpdateChannelPanel(SettingsPanel):
 			buildVersion.updateVersionType = originalChannel
 		else:
 			buildVersion.updateVersionType = channels[config.conf.profiles[0]["updateChannel"]["channel"]]
+		importlib.reload(versionInfo)
 		# This prevents an issue caused when updates were downloaded without installing and the channel was changed.
 		# Reset the state dictionary and save it
 		try:
@@ -297,6 +306,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			index = 0
 		if index > 0:
 			buildVersion.updateVersionType = channels[index]
+			importlib.reload(versionInfo)
 		NVDASettingsDialog.categoryClasses.append(UpdateChannelPanel)
 		if updateCheck is not None:
 			updateCheck.checkForUpdate_orig = updateCheck.checkForUpdate
@@ -316,6 +326,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		try:
 			NVDASettingsDialog.categoryClasses.remove(UpdateChannelPanel)
 			buildVersion.updateVersionType = originalChannel
+			importlib.reload(versionInfo)
 			originalChannel = None
 		except Exception:
 			pass

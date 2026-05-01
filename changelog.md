@@ -1,3 +1,3 @@
-This release sets last tested NVDA version to 2026.1. Alpha channel has been removed, and documentation has been improved.
+This is a bugfix release which should restore add-on features in NVDA 2025.3.3 and previous versions.
 
 SHA256:
