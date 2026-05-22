@@ -11,8 +11,8 @@ You can change the NVDA update channel by going to NVDA menu, Preferences, Setti
 * Default: this is the default channel used by your NVDA version. Choosing this option means the same as disabling the add-on.
 * Stable: force update channel to stable. Useful when you want to upgrade to a newer stable version from a beta.
 * Rc and beta: this is the channel for beta releases. You will receive the first beta version once it is released. This channel allows you to update through betas and release candidates.
-* Disable updates (not recommended): this option disables the update channel. If you check for updates an error message will be displayed. Remember that you can disable automatic updates from the General settings category. Use this option only with testing purposes.
 * Alpha (snapshots): choose this option to update to the latest alpha snapshot. Alpha snapshots allow you to test new features, but they are unstable.
+* Disable updates (not recommended): this option disables the update channel. If you check for updates an error message will be displayed. Remember that you can disable automatic updates from the General settings category. Use this option only with testing purposes.
 
 Information about available updates for each channel will be retrieved in the background once the settings panel is opened. Press tab to navigate to a read only edit field, where you can see this information. This information will be dynamically updated when you change the update channel from the combo box. If there is an update available for the selected channel, one or two links will appear next to the edit field:
 

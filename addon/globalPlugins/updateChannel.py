@@ -25,13 +25,17 @@ addonHandler.initTranslation()
 originalChannel = None
 confspec = {
 	"channel": "integer(default=0)",
+	"configVersion": "integer(default=1)",
 }
 config.conf.spec["updateChannel"] = confspec
 
 ALPHA_CHANNEL = "snapshot:alpha"
 ALPHA_FALLBACK_VERSION = "alpha-0,00000000"
+CONFIG_VERSION = 2
+LEGACY_DISABLE_UPDATES_CHANNEL_INDEX = 3
+DISABLE_UPDATES_CHANNEL_INDEX = 4
 
-channels = ["default", "stable", "beta", None, ALPHA_CHANNEL]
+channels = ["default", "stable", "beta", ALPHA_CHANNEL, None]
 channelDescriptions = [
 	# TRANSLATORS: default channel option in the combo box
 	_("Default"),
@@ -39,10 +43,10 @@ channelDescriptions = [
 	_("Stable"),
 	# TRANSLATORS: release candidate and beta releases option in the combo box
 	_("Rc and beta"),
-	# TRANSLATORS: disable updates option in the combo box
-	_("Disable updates (not recommended)"),
 	# TRANSLATORS: alpha snapshots option in the combo box
 	_("Alpha (snapshots)"),
+	# TRANSLATORS: disable updates option in the combo box
+	_("Disable updates (not recommended)"),
 ]
 
 
@@ -58,10 +62,21 @@ def getVersionStringFromBuildValues():
 def getConfiguredChannel():
 	try:
 		# Use normal profile only if possible
-		return int(config.conf.profiles[0]["updateChannel"]["channel"])
+		updateChannelConfig = config.conf.profiles[0]["updateChannel"]
 	except Exception:
 		# When using for the first time, read from general configuration
-		return config.conf["updateChannel"]["channel"]
+		updateChannelConfig = config.conf["updateChannel"]
+	configuredChannel = int(updateChannelConfig["channel"])
+	try:
+		configVersion = int(updateChannelConfig["configVersion"])
+	except Exception:
+		configVersion = 1
+	if configVersion < CONFIG_VERSION:
+		if configuredChannel == LEGACY_DISABLE_UPDATES_CHANNEL_INDEX:
+			configuredChannel = DISABLE_UPDATES_CHANNEL_INDEX
+			updateChannelConfig["channel"] = configuredChannel
+		updateChannelConfig["configVersion"] = CONFIG_VERSION
+	return configuredChannel
 
 
 def shouldUseAlphaFallbackVersion():
@@ -270,9 +285,13 @@ class UpdateChannelPanel(SettingsPanel):
 		try:
 			# Use normal profile only if possible
 			config.conf.profiles[0]["updateChannel"]["channel"] = self.channels.Selection
+			config.conf.profiles[0]["updateChannel"]["configVersion"] = CONFIG_VERSION
 		except Exception:
 			# When configuring for the first time, required keys are created in the normal profile
-			config.conf.profiles[0]["updateChannel"] = {"channel": self.channels.Selection}
+			config.conf.profiles[0]["updateChannel"] = {
+				"channel": self.channels.Selection,
+				"configVersion": CONFIG_VERSION,
+			}
 		if self.channels.Selection == 0:
 			buildVersion.updateVersionType = originalChannel
 		else:
