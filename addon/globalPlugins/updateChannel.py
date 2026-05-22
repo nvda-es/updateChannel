@@ -28,7 +28,10 @@ confspec = {
 }
 config.conf.spec["updateChannel"] = confspec
 
-channels = ["default", "stable", "beta", None]
+ALPHA_CHANNEL = "snapshot:alpha"
+ALPHA_FALLBACK_VERSION = "alpha-0,00000000"
+
+channels = ["default", "stable", "beta", None, ALPHA_CHANNEL]
 channelDescriptions = [
 	# TRANSLATORS: default channel option in the combo box
 	_("Default"),
@@ -38,6 +41,8 @@ channelDescriptions = [
 	_("Rc and beta"),
 	# TRANSLATORS: disable updates option in the combo box
 	_("Disable updates (not recommended)"),
+	# TRANSLATORS: alpha snapshots option in the combo box
+	_("Alpha (snapshots)"),
 ]
 
 
@@ -59,6 +64,10 @@ def getConfiguredChannel():
 		return config.conf["updateChannel"]["channel"]
 
 
+def shouldUseAlphaFallbackVersion():
+	return buildVersion.updateVersionType == ALPHA_CHANNEL and not buildVersion.version.startswith("alpha-")
+
+
 def checkForUpdateReplacement(auto=False):
 	# As described in issue #3 when updating from Alpha to stable NV Access's server
 	# offers version 2019.2, rather than whatever is the stable release at the time.
@@ -67,14 +76,20 @@ def checkForUpdateReplacement(auto=False):
 	# We cannot do this when initializing the plugin
 	# as this breaks the process of creating portable copies (see issue #5).
 	ORIG_NVDA_VERSION = buildVersion.version
-	IS_ALPHA = originalChannel == "snapshot:alpha"
+	IS_ALPHA = originalChannel == ALPHA_CHANNEL
 	shouldReplaceVersion = False
+	replacementVersion = None
 	if IS_ALPHA and buildVersion.updateVersionType != originalChannel:
 		shouldReplaceVersion = True
 	if not shouldReplaceVersion and IS_ALPHA and getConfiguredChannel() in {1, 2}:
 		shouldReplaceVersion = True
+	if shouldUseAlphaFallbackVersion():
+		shouldReplaceVersion = True
+		replacementVersion = ALPHA_FALLBACK_VERSION
+	elif shouldReplaceVersion:
+		replacementVersion = getVersionStringFromBuildValues()
 	if shouldReplaceVersion:
-		buildVersion.version = getVersionStringFromBuildValues()
+		buildVersion.version = replacementVersion
 		importlib.reload(versionInfo)
 	try:
 		return updateCheck.checkForUpdate_orig(auto)
@@ -171,7 +186,7 @@ class UpdateChannelPanel(SettingsPanel):
 			importlib.reload(versionInfo)
 		elif self.status == 2:
 			# Workaround for issue 3
-			if originalChannel == "snapshot:alpha" and originalChannel == currentChannel:
+			if originalChannel == ALPHA_CHANNEL and originalChannel == currentChannel:
 				buildVersion.updateVersionType = currentChannel
 				importlib.reload(versionInfo)
 
@@ -301,7 +316,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		global originalChannel
 		originalChannel = buildVersion.updateVersionType
 		index = getConfiguredChannel()
-		if index > len(channels):
+		if index >= len(channels):
 			index = 0
 		if index > 0:
 			buildVersion.updateVersionType = channels[index]

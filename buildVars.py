@@ -24,7 +24,7 @@ addon_info = AddonInfo(
 	addon_version = "26.3",
 	# Brief changelog for this version
 	# Translators: what's new content for the add-on version to be shown in the add-on store
-	addon_changelog=_("""Bug fixes"""),
+	addon_changelog=_("""Restored the alpha snapshots update channel."""),
 	# Author(s)
 	addon_author = "Jose Manuel Delicado <jm.delicado@nvda.es>, Javi Dominguez <fjavids@gmail.com>",
 	# URL for the add-on documentation support
