@@ -186,9 +186,7 @@ class UpdateChannelPanel(SettingsPanel):
 		if updateVersionInfo:
 			try:
 				channelInfo = updateVersionInfo.version
-				if (
-					updateVersionInfo.version != updateVersionInfo.apiVersion
-				):
+				if updateVersionInfo.version != updateVersionInfo.apiVersion:
 					# TRANSLATORS: information displayed when there is a new version available for download
 					channelInfo = _("{channelInfo} (apiVersion {APIVersion})").format(
 						channelInfo=channelInfo,
