@@ -28,7 +28,16 @@ confspec = {
 }
 config.conf.spec["updateChannel"] = confspec
 
-channels = ["default", "stable", "beta", None]
+# NVDA's update service resolves this channel to installers under:
+# https://download.nvaccess.org/snapshots/alpha/
+ALPHA_CHANNEL = "snapshot:alpha"
+ALPHA_CHECK_VERSION = "alpha-0,00000000"
+
+# Keep the existing channel indices stable so that users who disabled updates
+# with version 26.3 are not silently moved to the alpha channel.
+channels = ["default", "stable", "beta", None, ALPHA_CHANNEL]
+# Show Alpha above Disable without changing the stored channel indices.
+channelDisplayOrder = [0, 1, 2, 4, 3]
 channelDescriptions = [
 	# TRANSLATORS: default channel option in the combo box
 	_("Default"),
@@ -36,6 +45,8 @@ channelDescriptions = [
 	_("Stable"),
 	# TRANSLATORS: release candidate and beta releases option in the combo box
 	_("Rc and beta"),
+	# TRANSLATORS: alpha snapshots option in the combo box
+	_("Alpha (snapshots)"),
 	# TRANSLATORS: disable updates option in the combo box
 	_("Disable updates (not recommended)"),
 ]
@@ -59,6 +70,19 @@ def getConfiguredChannel():
 		return config.conf["updateChannel"]["channel"]
 
 
+def getChannelForSelection(selection):
+	"""Returns the update channel represented by a displayed combo-box selection."""
+	return channels[channelDisplayOrder[selection]]
+
+
+def getSelectionForChannelIndex(channelIndex):
+	"""Returns the displayed combo-box selection for a stored channel index."""
+	try:
+		return channelDisplayOrder.index(channelIndex)
+	except ValueError:
+		return 0
+
+
 def checkForUpdateReplacement(auto=False):
 	# As described in issue #3 when updating from Alpha to stable NV Access's server
 	# offers version 2019.2, rather than whatever is the stable release at the time.
@@ -67,19 +91,22 @@ def checkForUpdateReplacement(auto=False):
 	# We cannot do this when initializing the plugin
 	# as this breaks the process of creating portable copies (see issue #5).
 	ORIG_NVDA_VERSION = buildVersion.version
-	IS_ALPHA = originalChannel == "snapshot:alpha"
-	shouldReplaceVersion = False
-	if IS_ALPHA and buildVersion.updateVersionType != originalChannel:
-		shouldReplaceVersion = True
-	if not shouldReplaceVersion and IS_ALPHA and getConfiguredChannel() in {1, 2}:
-		shouldReplaceVersion = True
-	if shouldReplaceVersion:
-		buildVersion.version = getVersionStringFromBuildValues()
+	isOriginalAlpha = originalChannel == ALPHA_CHANNEL
+	replacementVersion = None
+	if buildVersion.updateVersionType == ALPHA_CHANNEL and not ORIG_NVDA_VERSION.startswith("alpha-"):
+		# The update API only offers snapshots when the current version is alpha-shaped.
+		replacementVersion = ALPHA_CHECK_VERSION
+	elif isOriginalAlpha and buildVersion.updateVersionType != originalChannel:
+		replacementVersion = getVersionStringFromBuildValues()
+	elif isOriginalAlpha and getConfiguredChannel() in {1, 2}:
+		replacementVersion = getVersionStringFromBuildValues()
+	if replacementVersion:
+		buildVersion.version = replacementVersion
 		importlib.reload(versionInfo)
 	try:
 		return updateCheck.checkForUpdate_orig(auto)
 	finally:
-		if shouldReplaceVersion:
+		if replacementVersion:
 			buildVersion.version = ORIG_NVDA_VERSION
 			importlib.reload(versionInfo)
 
@@ -92,7 +119,7 @@ class UpdateChannelPanel(SettingsPanel):
 		helper = guiHelper.BoxSizerHelper(self, sizer=sizer)
 		# TRANSLATORS: label for available update channels in a combo box
 		self.channels = helper.addLabeledControl(_("Update channel"), wx.Choice, choices=channelDescriptions)
-		self.channels.Selection = getConfiguredChannel()
+		self.channels.Selection = getSelectionForChannelIndex(getConfiguredChannel())
 		# If updateCheck was not imported correctly next part is skipped.
 		if updateCheck:
 			# Add an edit box where information about the selected channel
@@ -155,10 +182,10 @@ class UpdateChannelPanel(SettingsPanel):
 			# Don't wait for wx.EVT_CHOICE, update selected channel in self.channels now.
 			if self.channels.Selection == 0:
 				self.displayUpdateInfo(self.availableUpdates[originalChannel])
-			elif channels[self.channels.Selection] is None:
+			elif getChannelForSelection(self.channels.Selection) is None:
 				self.displayUpdateInfo(None)
 			else:
-				self.displayUpdateInfo(self.availableUpdates[channels[self.channels.Selection]])
+				self.displayUpdateInfo(self.availableUpdates[getChannelForSelection(self.channels.Selection)])
 		except Exception:
 			pass
 		self.event.wait()
@@ -171,14 +198,14 @@ class UpdateChannelPanel(SettingsPanel):
 			importlib.reload(versionInfo)
 		elif self.status == 2:
 			# Workaround for issue 3
-			if originalChannel == "snapshot:alpha" and originalChannel == currentChannel:
+			if originalChannel == ALPHA_CHANNEL and originalChannel == currentChannel:
 				buildVersion.updateVersionType = currentChannel
 				importlib.reload(versionInfo)
 
 	def displayUpdateInfo(self, updateVersionInfo):  # noqa C901
 		"""Select the appropriate message and put it in the edit box and updates de hyperlinks."""
 		showLinks = False
-		if channels[self.channels.Selection] == "default":
+		if getChannelForSelection(self.channels.Selection) == "default":
 			try:
 				updateVersionInfo = self.availableUpdates[originalChannel]
 			except KeyError:
@@ -219,7 +246,7 @@ class UpdateChannelPanel(SettingsPanel):
 				channelInfo = _("searching update info")
 			else:
 				channelInfo = ""
-		if channels[self.channels.Selection] is None:
+		if getChannelForSelection(self.channels.Selection) is None:
 			# TRANSLATORS: When disable updates has been selected, the current version information is displayed.
 			channelInfo = _("Current version: {version} build {version_build}").format(
 				version=buildVersion.version,
@@ -235,7 +262,7 @@ class UpdateChannelPanel(SettingsPanel):
 	def onChoice(self, evt):
 		"""Updates the channel information when the selection is changed."""
 		try:
-			updateVersionInfo = self.availableUpdates[channels[self.channels.Selection]]
+			updateVersionInfo = self.availableUpdates[getChannelForSelection(self.channels.Selection)]
 		except KeyError:
 			updateVersionInfo = None
 		self.displayUpdateInfo(updateVersionInfo)
@@ -250,16 +277,17 @@ class UpdateChannelPanel(SettingsPanel):
 
 	def onSave(self):
 		config.conf.profiles[-1].name = self.originalProfileName
+		channelIndex = channelDisplayOrder[self.channels.Selection]
 		try:
 			# Use normal profile only if possible
-			config.conf.profiles[0]["updateChannel"]["channel"] = self.channels.Selection
+			config.conf.profiles[0]["updateChannel"]["channel"] = channelIndex
 		except Exception:
 			# When configuring for the first time, required keys are created in the normal profile
-			config.conf.profiles[0]["updateChannel"] = {"channel": self.channels.Selection}
-		if self.channels.Selection == 0:
+			config.conf.profiles[0]["updateChannel"] = {"channel": channelIndex}
+		if channelIndex == 0:
 			buildVersion.updateVersionType = originalChannel
 		else:
-			buildVersion.updateVersionType = channels[config.conf.profiles[0]["updateChannel"]["channel"]]
+			buildVersion.updateVersionType = channels[channelIndex]
 		importlib.reload(versionInfo)
 		# This prevents an issue caused when updates were downloaded without installing and the channel was changed.
 		# Reset the state dictionary and save it
@@ -299,7 +327,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		global originalChannel
 		originalChannel = buildVersion.updateVersionType
 		index = getConfiguredChannel()
-		if index > len(channels):
+		if index >= len(channels):
 			index = 0
 		if index > 0:
 			buildVersion.updateVersionType = channels[index]
