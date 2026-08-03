@@ -3,23 +3,25 @@
 # See the file COPYING.txt for more details.
 # Copyright (C) 2026 Jose Manuel Delicado <jm.delicado@nvda.es>
 
-import globalPluginHandler
+import importlib
+
 import addonHandler
 import buildVersion
-import versionInfo
-import importlib
 import config
-from gui import guiHelper, NVDASettingsDialog
-from gui.settingsDialogs import SettingsPanel
+import globalPluginHandler
+import versionInfo
 import wx
+from gui import NVDASettingsDialog, guiHelper
+from gui.settingsDialogs import SettingsPanel
 
 try:
 	import updateCheck
 except Exception:
 	updateCheck = None
-import globalVars
 import functools
-from threading import Thread, Event
+from threading import Event, Thread
+
+import globalVars
 
 addonHandler.initTranslation()
 originalChannel = None
@@ -133,7 +135,7 @@ class UpdateChannelPanel(SettingsPanel):
 			self.thGetAvailableUpdates.start()
 			self.onChoice(None)
 
-	def getAvailableUpdates(self, currentChannel):  # noqa C901
+	def getAvailableUpdates(self, currentChannel):
 		"""Retrieves the information about the version to download for each update channel."""
 		for channel in channels:
 			if self.status > 0:
@@ -175,7 +177,7 @@ class UpdateChannelPanel(SettingsPanel):
 				buildVersion.updateVersionType = currentChannel
 				importlib.reload(versionInfo)
 
-	def displayUpdateInfo(self, updateVersionInfo):  # noqa C901
+	def displayUpdateInfo(self, updateVersionInfo):
 		"""Select the appropriate message and put it in the edit box and updates de hyperlinks."""
 		showLinks = False
 		if channels[self.channels.Selection] == "default":
@@ -293,7 +295,7 @@ class UpdateChannelPanel(SettingsPanel):
 
 class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	def __init__(self):
-		super(GlobalPlugin, self).__init__()
+		super().__init__()
 		if globalVars.appArgs.secure or config.isAppX or not updateCheck:  # Security checks
 			return
 		global originalChannel
