@@ -57,4 +57,4 @@ Information about available updates for each channel will be retrieved in the ba
 
 [[!tag dev stable]]
 
-[1]: https://addons.nvda-project.org/files/get.php?file=updchannelselect
+[1]: https://github.com/serrebidev/updateChannel/releases/latest
