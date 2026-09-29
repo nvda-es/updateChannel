@@ -296,7 +296,7 @@ class UpdateChannelPanel(SettingsPanel):
 class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	def __init__(self):
 		super(GlobalPlugin, self).__init__()
-		if globalVars.appArgs.secure or config.isAppX or not updateCheck:  # Security checks
+		if globalVars.appArgs.secure or getattr(config, "isAppX", False) or not updateCheck:  # Security checks
 			return
 		global originalChannel
 		originalChannel = buildVersion.updateVersionType
